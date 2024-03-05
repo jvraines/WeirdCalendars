@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>netstandard2.0</TargetFramework>
+	 <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Support\Lookup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Languages.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AA.Net">
+      <HintPath>..\AA.Net\AA.Net\bin\Release\netstandard2.0\AA.Net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
