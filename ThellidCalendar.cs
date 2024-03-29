@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using AA.Net;
 using System.Linq;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class ThellidCalendar : FixedCalendar {
@@ -29,11 +30,12 @@ namespace WeirdCalendars {
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
             int gYear = year - SyncOffset;
-            if (LeapYears.ContainsKey(gYear)) return LeapYears[gYear];
-            int yearStart = (int)(Earth.SeasonStart(gYear, Earth.Season.December) + 0.5);
-            int yearEnd = (int)(Earth.SeasonStart(gYear + 1, Earth.Season.December) + 0.5);
-            bool ly = yearEnd - yearStart == 366;
-            LeapYears.Add(gYear, ly);
+            if (!LeapYears.TryGetValue(gYear, out bool ly)) {
+                int yearStart = (int)(Earth.SeasonStart(gYear, Earth.Season.December) + 0.5);
+                int yearEnd = (int)(Earth.SeasonStart(gYear + 1, Earth.Season.December) + 0.5);
+                ly = yearEnd - yearStart == 366;
+                LeapYears.Add(gYear, ly);
+            }
             return ly;
         }
 

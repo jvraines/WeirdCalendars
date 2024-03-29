@@ -94,7 +94,10 @@ namespace WeirdCalendars {
                 fx.DayShortName = dfn.Substring(0, 3);
                 string d2 = dfn.Substring(0, 2);
                 fx.ShortDatePattern = FixDigits(fx.ShortDatePattern, null, null, null, null, d2, d2);
-                //if (ymd.Day < 1) d2 = "\b"; Kludgey and bugs XML output
+                if (ymd.Day == -1) {
+                    fx.LongDatePattern = FixDigits(fx.LongDatePattern, null, null, null, null, "-1", "-1");
+                    fx.Format = format.ReplaceUnescaped("dd", "-1").ReplaceUnescaped("d", "-1");
+                }
             }
             return fx;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AA.Net;
 using System.Globalization;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class DozenalSolsticeCalendar : FixedCalendar {
@@ -31,19 +32,19 @@ namespace WeirdCalendars {
 
         private static Dictionary<int, Pattern> Years = new Dictionary<int, Pattern>();
         private Pattern FetchPattern(int year) {
-            if (Years.ContainsKey(year)) return Years[year];
-            int gYear = year - SyncOffset;
-            int y1 = (int)(Earth.SeasonStart(gYear, Earth.Season.December) + 0.5);
-            int y2 = (int)(Earth.SeasonStart(gYear + 1, Earth.Season.December) + 0.5);
-            int days = y2 - y1;
-            Pattern p;
-            if (days == 366) p = Pattern.A;
-            else {
-                int y0 = (int)(Earth.SeasonStart(gYear - 1, Earth.Season.December) + 0.5);
-                int s = (int)(Earth.SeasonStart(gYear, Earth.Season.June) + 0.5);
-                p = s - y0 == 182 ? Pattern.B1 : Pattern.B2;
+            if (!Years.TryGetValue(year, out Pattern p)) {
+                int gYear = year - SyncOffset;
+                int y1 = (int)(Earth.SeasonStart(gYear, Earth.Season.December) + 0.5);
+                int y2 = (int)(Earth.SeasonStart(gYear + 1, Earth.Season.December) + 0.5);
+                int days = y2 - y1;
+                if (days == 366) p = Pattern.A;
+                else {
+                    int y0 = (int)(Earth.SeasonStart(gYear - 1, Earth.Season.December) + 0.5);
+                    int s = (int)(Earth.SeasonStart(gYear, Earth.Season.June) + 0.5);
+                    p = s - y0 == 182 ? Pattern.B1 : Pattern.B2;
+                }
+                Years.Add(year, p);
             }
-            Years.Add(year, p);
             return p;
         }
 

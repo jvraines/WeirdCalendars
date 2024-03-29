@@ -35,7 +35,7 @@ namespace WeirdCalendars {
                 case 50:
                     return Seasons[ld.Month - 1];
                 default:
-                    return "(none)";
+                    return NoSpecialDay;
             }
         }
 

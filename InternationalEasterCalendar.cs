@@ -6,7 +6,7 @@ using AA.Net;
 namespace WeirdCalendars {
     public class InternationalEasterCalendar : WeirdCalendar {
         
-        public override string Author => "Crissov";
+        public override string Author => "Christoph Päper";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/International_Easter_Calendar");
 
         protected override DateTime SyncDate => new DateTime(2024, 3, 31);
@@ -67,11 +67,12 @@ namespace WeirdCalendars {
         private static Dictionary<int, int> YearWeeks = new Dictionary<int, int>();
         
         private int GetWeeksInYear(int year) {
-            if (YearWeeks.ContainsKey(year)) return YearWeeks[year];
-            DateTime thisEaster = Earth.Easter(year);
-            DateTime nextEaster = Earth.Easter(year + 1);
-            int w = (int)(nextEaster - thisEaster).TotalDays / 7;
-            YearWeeks.Add(year, w);
+            if(!YearWeeks.TryGetValue(year, out int w)) {
+                DateTime thisEaster = Earth.Easter(year);
+                DateTime nextEaster = Earth.Easter(year + 1);
+                w = (int)(nextEaster - thisEaster).TotalDays / 7;
+                YearWeeks.Add(year, w);
+            }
             return w;
         }
 

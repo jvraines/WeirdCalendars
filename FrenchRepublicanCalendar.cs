@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using AA.Net;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class FrenchRepublicanCalendar : WeirdCalendar {
@@ -91,13 +92,14 @@ namespace WeirdCalendars {
             ValidateDateParams(year, era);
             if (year < 15) return year == 3 || year == 7 || year == 11;
             if (IsRevised) return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0 && year % 4000 != 0);
-            const double ParisOffset = 2.0 / 24;
             int gYear = year - SyncOffset;
-            if (LeapYears.ContainsKey(gYear)) return LeapYears[gYear];
-            int yearStart = (int)(Earth.SeasonStart(gYear, Earth.Season.September) + 0.5 + ParisOffset);
-            int yearEnd =  (int)(Earth.SeasonStart(gYear + 1, Earth.Season.September) + 0.5 + ParisOffset);
-            bool ly = yearEnd - yearStart == 366;
-            LeapYears.Add(gYear, ly);
+            if(!LeapYears.TryGetValue(gYear, out bool ly)) {
+                const double ParisOffset = 2.0 / 24;
+                int yearStart = (int)(Earth.SeasonStart(gYear, Earth.Season.September) + 0.5 + ParisOffset);
+                int yearEnd = (int)(Earth.SeasonStart(gYear + 1, Earth.Season.September) + 0.5 + ParisOffset);
+                ly = yearEnd - yearStart == 366;
+                LeapYears.Add(gYear, ly);
+            }
             return ly;
         }
 

@@ -54,9 +54,10 @@ namespace WeirdCalendars {
         private static Dictionary<int, LukashianPlot> Plots = new Dictionary<int, LukashianPlot>();
 
         private LukashianPlot GetPlot(int year) {
-            if (Plots.ContainsKey(year)) return Plots[year];
-            LukashianPlot p = new LukashianPlot(year - SyncOffset - 1);
-            Plots.Add(year, p);
+            if(!Plots.TryGetValue(year, out LukashianPlot p)) {
+                p = new LukashianPlot(year - SyncOffset - 1);
+                Plots.Add(year, p);
+            }
             return p;
         }
 

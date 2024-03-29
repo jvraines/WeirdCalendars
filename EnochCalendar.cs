@@ -46,7 +46,7 @@ namespace WeirdCalendars {
 
         public string GetHolyDay(int year, int month, int day) {
             ValidateDateParams(year, month, day, 1);
-            string h = "(none)";
+            string h = NoSpecialDay;
             switch (month) {
                 case 1:
                     if (day == 0) h = "Spring Equinox";

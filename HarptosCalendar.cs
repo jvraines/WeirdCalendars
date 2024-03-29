@@ -14,6 +14,10 @@ namespace WeirdCalendars {
 
         public override string Notes => "Dale Reckoning at latitude of Waterdeep";
 
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
+            ("n", "Festival")
+        };
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
             switch (month) {
@@ -35,9 +39,7 @@ namespace WeirdCalendars {
         public string GetTime(DateTime time) {
             ValidateDateTime(time);
             int jd = (int)time.JulianDay();
-            DateTime[] times;
-            if (AstroTimes.ContainsKey(jd)) times = AstroTimes[jd];
-            else times = UpdateAstroTimes(time, jd);
+            if (!AstroTimes.TryGetValue(jd, out DateTime[] times)) times = UpdateAstroTimes(time, jd);
             int h;
             for (h = 0; h < 10; h++) {
                 if (time < times[h]) break;
@@ -62,7 +64,7 @@ namespace WeirdCalendars {
                 case 4:
                     return "Greengrass";
                 case 7:
-                    return day == 30 ? "Midsummer" : "Shieldmeet";
+                    return day == 31 ? "Midsummer" : "Shieldmeet";
                 case 9:
                     return "Highharvestide";
                 case 11:
@@ -79,7 +81,7 @@ namespace WeirdCalendars {
                 case 4:
                     return "Grn";
                 case 7:
-                    return day == 30 ? "Msm" : "Shd";
+                    return day == 31 ? "Msm" : "Shd";
                 case 9:
                     return "Hig";
                 case 11:
@@ -89,6 +91,17 @@ namespace WeirdCalendars {
             };
         }
 
+        public string GetFestival(DateTime time) {
+            string f = NoSpecialDay;
+            var ld = ToLocalDate(time);
+            if (IsIntercalaryDay(ld.Year, ld.Month, ld.Day)) f = IntercalaryDayName(ld.Year, ld.Month, ld.Day);
+            else if (ld.Month == 3 && ld.Day == 19) f = "Spring Equinox";
+            else if (ld.Month == 6 && ld.Day == 20) f = "Summer Solstice";
+            else if (ld.Month == 9 && ld.Day == 21) f = "Autumn Equinox";
+            else if (ld.Month == 12 && ld.Day == 20) f = "Winter Solstice";
+            return f;
+        }
+        
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             SetNames(dtfi, new string[] { "Hammer", "Alturiak", "Ches", "Tarsakh", "Mirtul", "Kythorn", "Flamerule", "Eleasis", "Eleint", "Marpenoth", "Uktar", "Nightal", "" });
         }
@@ -106,6 +119,7 @@ namespace WeirdCalendars {
                 fx.DayFullName = $"{ordday} day of the {tenday} tenday";
                 fx.DayShortName = $"{ordday} of {tenday}";
             }
+            fx.Format = format.ReplaceUnescaped("n", $"'{GetFestival(time)}'");
             string hour = $"'{GetTime(time)}'";
             if ("fFUgGtT".Contains(fx.Format)) {
                 // fix up long and short time formats

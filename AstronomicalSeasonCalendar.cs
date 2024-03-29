@@ -43,9 +43,10 @@ namespace WeirdCalendars {
         private static Dictionary<int, AstronomicalSeasonPlot> Plots = new Dictionary<int, AstronomicalSeasonPlot>();
 
         private AstronomicalSeasonPlot GetPlot(int year) {
-            if (Plots.ContainsKey(year)) return Plots[year];
-            AstronomicalSeasonPlot p = new AstronomicalSeasonPlot(year - SyncOffset);
-            Plots.Add(year, p);
+            if (!Plots.TryGetValue(year, out AstronomicalSeasonPlot p)) {
+                p = new AstronomicalSeasonPlot(year - SyncOffset);
+                Plots.Add(year, p);
+            }
             return p;
         }
 

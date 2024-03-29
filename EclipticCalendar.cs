@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
 
@@ -74,10 +75,11 @@ namespace WeirdCalendars {
         private static Dictionary<int, EclipticPlot> Plots = new Dictionary<int, EclipticPlot>();
         
         private EclipticPlot GetPlot(int year) {
-            year -= SyncOffset; 
-            if (Plots.ContainsKey(year)) return Plots[year];
-            EclipticPlot p = new EclipticPlot(year);
-            Plots.Add(year, p);
+            year -= SyncOffset;
+            if (!Plots.TryGetValue(year, out EclipticPlot p)) {
+                p = new EclipticPlot(year);
+                Plots.Add(year, p);
+            }
             return p;
         }
 

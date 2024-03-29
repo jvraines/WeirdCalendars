@@ -90,9 +90,10 @@ namespace WeirdCalendars {
         private static Dictionary<int, HermeticLunarPlot> Plots = new Dictionary<int, HermeticLunarPlot>();
 
         private HermeticLunarPlot GetPlot(int year) {
-            if (Plots.ContainsKey(year)) return Plots[year];
-            HermeticLunarPlot p = new HermeticLunarPlot(year - SyncOffset);
-            Plots.Add(year, p);
+            if (!Plots.TryGetValue(year, out HermeticLunarPlot p)) {
+                p = new HermeticLunarPlot(year - SyncOffset);
+                Plots.Add(year, p);
+            }
             return p;
         }
 

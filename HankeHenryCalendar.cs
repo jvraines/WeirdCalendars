@@ -48,7 +48,7 @@ namespace WeirdCalendars {
 
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            return new DateTime(year, 1, 1).DayOfWeek == DayOfWeek.Thursday || new DateTime(year, 12, 31).DayOfWeek == DayOfWeek.Thursday; 
+            return IsISOLeapYear(year);
         }
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {

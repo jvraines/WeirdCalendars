@@ -22,12 +22,13 @@ namespace WeirdCalendars {
             ValidateDateParams(year, month, era);
             switch (month) {
                 case 1:
-                case 3:
+                case 2:
                 case 10:
                 case 11:
                 case 12:
                     return 30;
-                case 2:
+                // Month of leap day was 2 in previous version.
+                case 3:
                     return IsLeapYear(year) ? 30 : 29;
                 default:
                     return 31;
@@ -39,17 +40,10 @@ namespace WeirdCalendars {
             return month == 2 && day == 30;
         }
 
-        private static Dictionary<int, bool> LeapYears = new Dictionary<int, bool>();
-
+        // Author now follows Gregorian leap years.
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            if (LeapYears.ContainsKey(year)) return LeapYears[year];
-            int gYear = year + 443;
-            int yearStart = (int)Math.Round(Earth.SeasonStart(gYear, Earth.Season.December) + 0.5);
-            int yearEnd = (int)Math.Round(Earth.SeasonStart(gYear + 1, Earth.Season.December) + 0.5);
-            bool ly = yearEnd - yearStart == 366;
-            LeapYears.Add(year, ly);
-            return ly;
+            return base.IsLeapYear(year + 444, 0);
         }
 
         private static Dictionary<int, (int, int, int, int)> Movables = new Dictionary<int, (int, int, int, int)>();
@@ -89,11 +83,7 @@ namespace WeirdCalendars {
             }
             //check movable feasts
             if (month == 4 || month == 5 || month == 9 || month == 10) {
-                (int Eggmonth, int Eggday, int Harvestmonth, int Harvestday) m;
-                if (Movables.ContainsKey(year)) {
-                    m = Movables[year];
-                }
-                else {
+                if (!Movables.TryGetValue(year, out (int Eggmonth, int Eggday, int Harvestmonth, int Harvestday) m)) {
                     int gYear = year + 444;
                     double s = Earth.SeasonStart(gYear, Earth.Season.March);
                     var ld = ToLocalDate(Moon.NextPhase(Moon.Phase.FullMoon, s).ToDateTime());
@@ -109,7 +99,7 @@ namespace WeirdCalendars {
                 if (month == m.Eggmonth && day == m.Eggday) f += $"{(f != null ? ", " : "")}Egg Moon";
                 else if (month == m.Harvestmonth && day == m.Harvestday) f += $"{(f != null ? ", " : "")}Harvest Moon";
             }
-            return f ?? "(none)";
+            return f ?? NoSpecialDay;
         }
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {

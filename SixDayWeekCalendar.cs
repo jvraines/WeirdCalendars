@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using AA.Net;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class SixDayWeekCalendar : FixedCalendar {
@@ -9,7 +10,7 @@ namespace WeirdCalendars {
         public override string Author => "Tibi86";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/6-Day_Week_Solar_Calendar_with_common_Muslim/Christian_weekend");
 
-        protected override DateTime SyncDate => new DateTime(2021, 3, 21);
+        protected override DateTime SyncDate => new DateTime(2021, 3, 21, 6, 0, 0);
         protected override int SyncOffset => 0;
         public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1); // Limit of VSOP87 accuracy
 
@@ -30,11 +31,12 @@ namespace WeirdCalendars {
         private static Dictionary<int, bool> LeapYears = new Dictionary<int, bool>();
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            if (LeapYears.ContainsKey(year)) return LeapYears[year];
-            int yearStart = (int)(Earth.SeasonStart(year, Earth.Season.March) + 0.5);
-            int yearEnd = (int)(Earth.SeasonStart(year + 1, Earth.Season.March) + 0.5);
-            bool ly = yearEnd - yearStart == 366;
-            LeapYears.Add(year, ly);
+            if (!LeapYears.TryGetValue(year, out bool ly)) {
+                int yearStart = (int)(Earth.SeasonStart(year, Earth.Season.March) + 0.5);
+                int yearEnd = (int)(Earth.SeasonStart(year + 1, Earth.Season.March) + 0.5);
+                ly = yearEnd - yearStart == 366;
+                LeapYears.Add(year, ly);
+            }
             return ly;
         }
 
@@ -57,6 +59,12 @@ namespace WeirdCalendars {
             for (int i = 9; i < 12; i++) m[i] = dtfi.MonthNames[i - 9];
             m[12] = "";
             SetNames(dtfi, m);
+        }
+
+        internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
+            FormatWC fx = new FormatWC(format, dtfi);
+            CustomizeTimes(fx, time);
+            return fx;
         }
     }
 }

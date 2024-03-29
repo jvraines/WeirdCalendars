@@ -47,9 +47,10 @@ namespace WeirdCalendars {
         private static Dictionary<int, LunarPlot> Plots = new Dictionary<int, LunarPlot>();
 
         private LunarPlot GetPlot(int year) {
-            if (Plots.ContainsKey(year)) return Plots[year];
-            LunarPlot p = new LunarPlot(year, AA.Net.Earth.Season.March);
-            Plots.Add(year, p);
+            if (!Plots.TryGetValue(year, out LunarPlot p)) {
+                p = new LunarPlot(year, AA.Net.Earth.Season.March);
+                Plots.Add(year, p);
+            }
             return p;
         }
 

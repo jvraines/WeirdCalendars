@@ -50,6 +50,8 @@ namespace WeirdCalendars {
             protected set => title = value;
         }
 
+        protected readonly string NoSpecialDay = "(none)";
+
         /// <summary>
         /// Exception indicating that the requested day of week cannot be represented as a value of the DateTime.DayOfWeek enumeration.
         /// </summary>
@@ -214,6 +216,10 @@ namespace WeirdCalendars {
             return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
         }
 
+        protected bool IsISOLeapYear (int year) {
+            return new DateTime(year, 1, 1).DayOfWeek == DayOfWeek.Thursday || new DateTime(year, 12, 31).DayOfWeek == DayOfWeek.Thursday;
+        }
+
         public override bool IsLeapDay(int year, int month, int day, int era) {
             ValidateDateParams(year, month, day, era);
             return month == 2 && day == 29;
@@ -358,7 +364,7 @@ namespace WeirdCalendars {
             }
         }
 
-        private DateTime LastTime;
+        private DateTime LastTime = DateTime.MaxValue;
         private (int Year, int Month, int Day, TimeSpan TimeOfDay) LastLocalDate;
 
         /// <summary>
@@ -477,6 +483,5 @@ namespace WeirdCalendars {
             if (d2 != null) s = s.ReplaceUnescaped("dddd", "~~~~").ReplaceUnescaped("ddd", "~~~").ReplaceUnescaped("dd", $"'{d2}'").ReplaceUnescaped("d", $"'{d1}'").ReplaceUnescaped("~~~~", "dddd").ReplaceUnescaped("~~~", "ddd");
             return s;
         }
-
     }
 }

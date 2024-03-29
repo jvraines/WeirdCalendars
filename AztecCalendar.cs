@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class AztecCalendar : WeirdCalendar {
@@ -87,11 +88,12 @@ namespace WeirdCalendars {
 
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            if (LeapYears.ContainsKey(year)) return LeapYears[year];
-            int yearStart = YearBegins(year);
-            int yearEnd = YearBegins(year + 1);
-            bool ly = yearEnd - yearStart == 366;
-            LeapYears.Add(year, ly);
+            if (!LeapYears.TryGetValue(year, out bool ly)) {
+                int yearStart = YearBegins(year);
+                int yearEnd = YearBegins(year + 1);
+                ly = yearEnd - yearStart == 366;
+                LeapYears.Add(year, ly);
+            }
             return ly;
 
             int YearBegins(int y) {

@@ -59,7 +59,7 @@ namespace WeirdCalendars {
         }
 
         public string GetSpecialDay(int month, int day) {
-            string result = "(none)";
+            string result = NoSpecialDay;
             if (day == 1) {
                 if (month == 1) result = "Hogswatchday";
                 else if (month == 14) result = "Crueltide";

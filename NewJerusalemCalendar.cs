@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using AA.Net;
 
 namespace WeirdCalendars {
     public class NewJerusalemCalendar : FixedCalendar {
 
-        public override string Author => "Calendar Education Foundation";
+        public override string Author => "Russell J. Ewert";
         public override Uri Reference => new Uri("https://www.yumpu.com/en/document/read/54717208/the-new-jerusalem-calendar");
 
         protected override DateTime SyncDate => new DateTime(2024, 3, 20);
@@ -28,10 +30,18 @@ namespace WeirdCalendars {
             return IsLeapYear(year) ? 2 : 1;
         }
 
+        private static Dictionary<int, bool> LeapYears = new Dictionary<int, bool>();
+
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            year++;
-            return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+            if (!LeapYears.TryGetValue(year, out bool leap)) {
+                // Niagara Falls is UTC-4 after March 14 at the latest. UTC = JD + 0.5 - 4/24
+                int equilux1 = (int)(Earth.SeasonStart(year, Earth.Season.March) + 1 / 3);
+                int equilux2 = (int)(Earth.SeasonStart(year + 1, Earth.Season.March) + 1 / 3);
+                leap = equilux2 - equilux1 > 365;
+                LeapYears.Add(year, leap);
+            }
+            return leap;
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {

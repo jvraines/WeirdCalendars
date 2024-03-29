@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class TimeToComeCalendar : FixedCalendar {
@@ -69,11 +70,12 @@ namespace WeirdCalendars {
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
             int gYear = year - SyncOffset;
-            if (LeapYears.ContainsKey(gYear)) return LeapYears[gYear];
-            int yearStart = (int)Math.Round(Earth.SeasonStart(gYear, Earth.Season.March) + 0.5);
-            int yearEnd = (int)Math.Round(Earth.SeasonStart(gYear + 1, Earth.Season.March) + 0.5);
-            bool ly = yearEnd - yearStart == 366;
-            LeapYears.Add(gYear, ly);
+            if (!LeapYears.TryGetValue(gYear, out bool ly)) {
+                int yearStart = (int)Math.Round(Earth.SeasonStart(gYear, Earth.Season.March) + 0.5);
+                int yearEnd = (int)Math.Round(Earth.SeasonStart(gYear + 1, Earth.Season.March) + 0.5);
+                ly = yearEnd - yearStart == 366;
+                LeapYears.Add(gYear, ly);
+            }
             return ly;
         }
         public override bool IsIntercalaryDay(int year, int month, int day) {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class EarthEpicCalendar : WeirdCalendar {
@@ -89,9 +90,10 @@ namespace WeirdCalendars {
         private static Dictionary<int, EarthEpicPlot> Plots = new Dictionary<int, EarthEpicPlot>();
 
         private EarthEpicPlot GetPlot(int year) {
-            if (Plots.ContainsKey(year)) return Plots[year];
-            EarthEpicPlot p = new EarthEpicPlot(year - SyncOffset);
-            Plots.Add(year, p);
+            if (!Plots.TryGetValue(year, out EarthEpicPlot p)) {
+                p = new EarthEpicPlot(year - SyncOffset);
+                Plots.Add(year, p);
+            }
             return p;
         }
 

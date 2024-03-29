@@ -4,7 +4,7 @@ using System.Globalization;
 namespace WeirdCalendars {
     public class OctalenderCalendar : LeapWeekCalendar {
         
-        public override string Author => "Crissov";
+        public override string Author => "Christoph Päper";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/Octalendar");
 
         protected override DateTime SyncDate => new DateTime(2021, 1, 1);

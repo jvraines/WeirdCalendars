@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace WeirdCalendars {
     public class UniversalCelestialCalendar : FixedCalendar {
@@ -26,6 +29,11 @@ namespace WeirdCalendars {
 
         public override string Author => "Litmus A. Freeman";
         public override Uri Reference => new Uri("https://universalcelestialcalendar.com/Universal%20Community%20Calendar%20Wiki.backup.html");
+
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
+            ("n", "Festival"),
+            ("b", "Symbolized")
+        };
 
         protected override int GetFirstDayOfMonth(int year, int month) {
             ValidateDateParams(year, month, 0);
@@ -67,6 +75,44 @@ namespace WeirdCalendars {
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);
             return 13;
+        }
+
+        public string GetFestival(DateTime time, bool symbolized = false) {
+            string f = NoSpecialDay;
+            var (_, month, day, _) = ToLocalDate(time);
+            // cardinal
+            string s = "⊕";
+            if (month == 12 && day > 28 || month == 0 || month == 1 && day == 0) f = "New Year Festival of Aries♈";
+            else if (month == 3 && day == 30 || month == 4 && day < 2) f = "Festival of Cancer♋";
+            else if (month == 7 && day < 4) f = "Festival of Libra♎";
+            else if (month == 10 && day < 3) f = "Festival of Capricorn♑";
+            else if (day > 14 && day < 17) {
+                //mid
+                s = "⊗";
+                if (month == 2) f = "Mid Taurus♉";
+                else if (month == 5) f = "Mid Leo♌";
+                else if (month == 8) f = "Mid Scorpio♏";
+                else if (month == 11) f = "Mid Aquarius♒";
+            }
+            if (symbolized && f != NoSpecialDay) f = s + f.Substring(f.Length - 1);
+            return f;
+        }
+
+        private static string Zodiac = "♈♉♊♋♌♍♎♏♐♑♒♓";
+        private static string Quarter = "◷◴◵◶";
+
+        public string GetSymbolized(DateTime time) {
+            string s = "";
+            var ld = ToLocalDate(time);
+            if (IsIntercalaryDay(ld.Year, ld.Month, ld.Day)) {
+                if (ld.Month == 0) s = ld.Day == 0 ? "✶" : "❂";
+                else s = Quarter.Substring(ld.Month / 3, 1);
+            }
+            else {
+                string f = GetFestival(time, true);
+                s = f == NoSpecialDay ? $"{ld.Day}{Zodiac.Substring(ld.Month - 1, 1)}" : f;
+            }
+            return $"{s}{ld.Year}";
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {
@@ -119,6 +165,7 @@ namespace WeirdCalendars {
                 fx.DayFullName = d;
                 fx.DayShortName = d.Substring(0, 3);
             }
+            fx.Format = format.ReplaceUnescaped("n", $"'{GetFestival(time)}'").ReplaceUnescaped("b", $"'{GetSymbolized(time)}'");
             return fx;
         }
 

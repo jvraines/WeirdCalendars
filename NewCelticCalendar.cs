@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AA.Net;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class NewCelticCalendar : WeirdCalendar {
@@ -40,12 +42,13 @@ namespace WeirdCalendars {
 
         public override int GetDaysInYear(int year, int era) {
             ValidateDateParams(year, era);
-            if (YearDays.ContainsKey(year)) return YearDays[year];
-            ValidationEnabled = false;
-            int d = 0;
-            for (int m = 1; m <= GetMonthsInYear(year); m++) d += GetDaysInMonth(year, m);
-            ValidationEnabled = true;
-            YearDays.Add(year, d);
+            if (!YearDays.TryGetValue(year, out int d)) {
+                ValidationEnabled = false;
+                d = 0;
+                for (int m = 1; m <= GetMonthsInYear(year); m++) d += GetDaysInMonth(year, m);
+                ValidationEnabled = true;
+                YearDays.Add(year, d);
+            }
             return d;
         }
 

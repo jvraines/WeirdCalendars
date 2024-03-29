@@ -7,8 +7,6 @@ namespace WeirdCalendars {
         public override string Author => "Thomas Gangale";
         public override Uri Reference => new Uri("https://ops-alaska.com/time/gangale_mst/darian.htm");
 
-        public override string Notes => "Returning approximate Coordinated Mars Time.";
-
         protected override DateTime SyncDate => new DateTime(2022, 12, 25, 11, 11, 27);
         protected override int SyncOffset => -1802;
 
@@ -48,6 +46,8 @@ namespace WeirdCalendars {
             string[] m = new string[13];
             for (int i = 0; i < 13; i++) m[i] = MonthName[i];
             SetNames(dtfi, m, null, new string[] { "Sol Solis", "Sol Lunae", "Sol Martis", "Sol Mercurii", "Sol Jovis", "Sol Veneris", "Sol Saturni" }, new string[] { "Sol", "Lun", "Mar", "Mer", "Jov", "Ven", "Sat"});
+            dtfi.LongTimePattern += " 'MTC'";
+            dtfi.ShortTimePattern += " 'MTC'";
         }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
