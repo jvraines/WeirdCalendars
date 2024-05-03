@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 
 namespace WeirdCalendars {
     public class UniversalCelestialCalendar : FixedCalendar {

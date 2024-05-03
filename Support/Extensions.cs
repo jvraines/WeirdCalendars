@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AA.Net;
+using System;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -194,6 +195,10 @@ namespace WeirdCalendars {
             }
             while (value > 0);
             return result;
+        }
+
+        public static double ToLastUTMidnight(this double jd, bool isDynamical = true) {
+            return (int)((isDynamical ? jd.JulianUniversalDay() : jd) + 0.5) - 0.5;
         }
     }
 }

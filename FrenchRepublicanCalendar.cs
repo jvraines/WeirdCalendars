@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using AA.Net;
-using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class FrenchRepublicanCalendar : WeirdCalendar {

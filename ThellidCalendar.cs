@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using AA.Net;
 using System.Linq;
-using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class ThellidCalendar : FixedCalendar {

@@ -1,8 +1,6 @@
 ﻿using AA.Net;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace WeirdCalendars {
     public class JulianOlympiadCalendar : WeirdCalendar {

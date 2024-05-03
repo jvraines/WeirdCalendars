@@ -1,8 +1,6 @@
-﻿using AA.Net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class NewCelticCalendar : WeirdCalendar {

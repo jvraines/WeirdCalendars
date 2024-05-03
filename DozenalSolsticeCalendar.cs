@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using AA.Net;
 using System.Globalization;
-using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class DozenalSolsticeCalendar : FixedCalendar {

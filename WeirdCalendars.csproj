@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="FixedFestivityDayCalendar.cs" />
     <Compile Remove="Support\Lookup.cs" />
+    <Compile Remove="TraditionalChristianCalendar.cs" />
   </ItemGroup>
 
   <ItemGroup>

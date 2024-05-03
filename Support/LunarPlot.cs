@@ -28,10 +28,10 @@ namespace WeirdCalendars.Support {
             Year = year;
             FirstSeason = start;
             FindYearBounds();
-            YearDays = yearStart[1] - yearStart[0];
+            YearDays = (int)(yearStart[1] - yearStart[0]);
         }
 
-        protected int[] yearStart = new int[2];
+        protected double[] yearStart = new double[2];
 
         private void FindYearBounds() {
             // Begins with the new moon preceding the first full moon after the first season
@@ -39,14 +39,14 @@ namespace WeirdCalendars.Support {
                 double equinox = Earth.SeasonStart(Year + i, FirstSeason);
                 double fullMoon = Moon.NextPhase(Moon.Phase.FullMoon, equinox);
                 double newMoon = Moon.NextPhase(Moon.Phase.NewMoon, fullMoon - 30);
-                yearStart[i] = JulianToUTMidnight(newMoon);
+                yearStart[i] = newMoon.ToLastUTMidnight();
             }
         }
 
         private void PlotYear() {
             moons = new int[13];
             int moonPtr = 0;
-            int lastNewMoon = yearStart[0];
+            double lastNewMoon = yearStart[0];
             int moonCounter = 1;
             int nextSeason = (int)FirstSeason;
             double seasonEnds;
@@ -54,7 +54,7 @@ namespace WeirdCalendars.Support {
             GetNextSeason();
             // Find subsequent new moons and moon start days through end of year
             do {
-                int nextNewMoon = JulianToUTMidnight(Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28));
+                double nextNewMoon = Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28).ToLastUTMidnight();
                 double nextFullMoon = Moon.NextPhase(Moon.Phase.FullMoon, nextNewMoon);
                 if (nextFullMoon < seasonEnds) moonCounter++;
                 else {
@@ -62,7 +62,7 @@ namespace WeirdCalendars.Support {
                     moonCounter = 1;
                     GetNextSeason();
                 }
-                moons[moonPtr++] = nextNewMoon - lastNewMoon;
+                moons[moonPtr++] = (int)(nextNewMoon - lastNewMoon);
                 lastNewMoon = nextNewMoon;
             }
             while (lastNewMoon < yearStart[1]);
@@ -72,10 +72,6 @@ namespace WeirdCalendars.Support {
                 if (nextSeason == 0) year++;
                 seasonEnds = Earth.SeasonStart(year, (Earth.Season)nextSeason);
             }
-        }
-
-        protected int JulianToUTMidnight(double jde) {
-            return (int)(jde.JulianUniversalDay() + 0.5);
         }
     }
 }

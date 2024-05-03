@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using AA.Net;
-using WeirdCalendars.Support;
 
 namespace WeirdCalendars {
     public class RunicCalendar : WeirdCalendar {

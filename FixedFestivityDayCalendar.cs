@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 
 namespace WeirdCalendars {
     public class FixedFestivityDayCalendar : FixedCalendar {
@@ -10,25 +10,29 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
 
-        // As defined, common year has 366 days! Something is amiss.
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
+            ("I", "\"ISO\" format")
+        };
+
+        private bool IsMonth30(int year, int month) => (month & 1) == 0 || month == 3 && !IsLeapYear(year);
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
-            return (month & 1) == 1 || month == 12 && IsLeapYear(year) ? 31 : 30;
+            return IsMonth30(year, month) ? 30 : 31;
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {
             ValidateDateParams(year, month, day, era);
-            return month == 12 && day == 31;
+            return IsLeapYear(year) && month == 3 && day == 1;
         }
 
         public override bool IsIntercalaryDay(int year, int month, int day) {
             ValidateDateParams(year, month, day);
-            if ((month & 1) == 1) {
+            if (IsMonth30(year, month)) {
                 switch (day) {
-                    case 1:
-                    case 9:
-                    case 17:
-                    case 24:
+                    case 8:
+                    case 23:
+                    case 31:
                         return true;
                     default:
                         return false;
@@ -36,9 +40,10 @@ namespace WeirdCalendars {
             }
             else {
                 switch (day) {
-                    case 8:
-                    case 23:
-                    case 31:
+                    case 1:
+                    case 9:
+                    case 17:
+                    case 24:
                         return true;
                     default:
                         return false;
@@ -54,12 +59,28 @@ namespace WeirdCalendars {
             return "Hol";
         }
 
-        protected override int WeekdayNumber(DateTime time) {
+        private int AdjustedDay(DateTime time) {
             var ld = ToLocalDate(time);
             int d = ld.Day;
-            if ((ld.Month & 1) == 1) d -= d > 24 ? 3 : d > 9 ? 2 : 1;
-            else d -= d > 23 ? 2 : d > 8 ? 1 : 0;
-            return d % 7;
+            if (IsMonth30(ld.Year, ld.Month)) d -= d > 23 ? 2 : d > 8 ? 1 : 0;
+            else d -= d > 24 ? 3 : d > 9 ? 2 : 1;
+            return d;
+        }
+
+        protected override int WeekdayNumber(DateTime time) {
+            return AdjustedDay(time) % 7;
+        }
+
+        internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
+            FormatWC fx = new FormatWC(format, dtfi);
+            int ad = AdjustedDay(time);
+            int w = (ad - 1) / 7 + 1;
+            var ld = ToLocalDate(time);
+            int d;
+            if (IsIntercalaryDay(ld.Year, ld.Month, ld.Day)) d = 0;
+            else d = (ad - 1) % 7 + 1;
+            fx.Format = format.ReplaceUnescaped("I", $"{ld.Month:00}-{w}-{d}");
+            return fx;
         }
     }
 }

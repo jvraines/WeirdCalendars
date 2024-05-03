@@ -90,18 +90,14 @@ namespace WeirdCalendars {
             moons = new int[15];
             int moonPtr = 0;
             // Find new moon immediately preceding this year
-            int lastNewMoon = JulianToUTMidnight(Moon.NextPhase(Moon.Phase.NewMoon, yearStart[0] - 30));
+            double lastNewMoon = Moon.NextPhase(Moon.Phase.NewMoon, yearStart[0] - 30).ToLastUTMidnight();
             // Find subsequent new moons and moon start days through end of year
             while (lastNewMoon < yearStart[1]) {
-                int nextNewMoon = JulianToUTMidnight(Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28));
-                moons[moonPtr++] = lastNewMoon - yearStart[0] - 1;
+                double nextNewMoon = Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28).ToLastUTMidnight();
+                moons[moonPtr++] = (int)(lastNewMoon - yearStart[0] - 1);
                 lastNewMoon = nextNewMoon;
             }
             moons[moonPtr] = yearStart[1];
-        }
-
-        private int JulianToUTMidnight(double jde) {
-            return (int)(jde.JulianUniversalDay() + 0.5);
         }
     }
 }

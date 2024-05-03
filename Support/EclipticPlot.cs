@@ -39,11 +39,7 @@ namespace WeirdCalendars {
         }
 
         private void FindYearBounds() {
-            for (int i = 0; i < 2; i++) yearStart[i] = AdjustedDay(Earth.SeasonStart(year + i, Earth.Season.March));
-        }
-
-        private double AdjustedDay(double JDE) {
-            return (int)(JDE.JulianUniversalDay() + 0.5) - 0.5;
+            for (int i = 0; i < 2; i++) yearStart[i] = Earth.SeasonStart(year + i, Earth.Season.March).ToLastUTMidnight();
         }
 
         private void PlotYear() {
@@ -51,7 +47,7 @@ namespace WeirdCalendars {
             double lastStart = yearStart[0];
             // Find lengths of seasons
             for (int s = 1; s < 4; s++) {
-                double nextStart = AdjustedDay(Earth.SeasonStart(year, (Earth.Season)s));
+                double nextStart = Earth.SeasonStart(year, (Earth.Season)s).ToLastUTMidnight();
                 seasons[s - 1] = (int)(nextStart - lastStart);
                 lastStart = nextStart;
             }

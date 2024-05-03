@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace WeirdCalendars {
     public class AllStarZodiacalCalendar : WeirdCalendar {
@@ -9,8 +7,8 @@ namespace WeirdCalendars {
         public override string Author => "Denis Bredelet";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/All_Star_Zodiacal_Calendar");
 
-        protected override DateTime SyncDate => new DateTime(2024, 3, 27);
-        protected override int SyncOffset => 0;
+        protected override DateTime SyncDate => new DateTime(349, 3, 22);
+        protected override int SyncOffset => -349;
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
@@ -33,9 +31,7 @@ namespace WeirdCalendars {
 
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            int s = year % 138;
-            int l = year % 1100;
-            return s % 4 == 0 && s != 136 && l != 1098;
+            return year % 550 % 78 % 4 == 0;
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {

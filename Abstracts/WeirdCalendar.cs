@@ -63,8 +63,11 @@ namespace WeirdCalendars {
         // Choose a year around 2020 to speed calculations.
         protected abstract DateTime SyncDate { get; }
         
-        //Offset of year count from year of SyncDate
+        // Offset of year count from year of SyncDate
         protected abstract int SyncOffset { get; }
+
+        // Customizable max year offset
+        protected virtual int MaxYearOffset => SyncOffset;
         
         /// <summary>
         /// A List of tuples describing custom format strings available for use with DateTime.ToStringWC.
@@ -300,7 +303,7 @@ namespace WeirdCalendars {
                 switch (p) {
                     case 0:
                         int minYear = MinSupportedDateTime.Year + SyncOffset;
-                        int maxYear = MaxSupportedDateTime.Year + SyncOffset;
+                        int maxYear = MaxSupportedDateTime.Year + MaxYearOffset;
                         if (param[0] < minYear || param[0] > maxYear) oops = new ArgumentOutOfRangeException("year", $"Calendar year must be in the range {minYear} to {maxYear}. Year {param[0]} was passed.");
                         break;
                     case 1:
