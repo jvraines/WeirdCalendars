@@ -6,7 +6,7 @@ using WeirdCalendars.Support;
 namespace WeirdCalendars {
     public class NomadCalendar : WeirdCalendar {
 
-        public override string Author => "Traditional(?) and Peter Meyer";
+        public override string Author => "Traditional and Peter Meyer";
         public override Uri Reference => new Uri("https://www.hermetic.ch/cal_stud/knc/Kazakh_Nomad_Calendar.htm");
 
         protected override DateTime SyncDate => new DateTime(2024, 5, 9);

@@ -47,12 +47,13 @@ namespace WeirdCalendars.Support {
                 var sunH = Transform.ToHorizontal(Sky.HourAngle(gst, longitude, sunEq.rightAscension), latitude, sunEq.declination);
                 var moonH = Transform.ToHorizontal(Sky.HourAngle(gst, longitude, moonEq.rightAscension), latitude, moonEq.declination);
 
-                double pi = Moon.Parallax(moonP.distance) * 60;
+                double pi = Moon.Parallax(moonP.distance);
                 double SD = 0.27245 * pi;
+                double SDprime = SD * (1 + Sin(moonH.altitude.ToRadians()) * Sin(pi.ToRadians()));
                 double ARCV = moonH.altitude - sunH.altitude;
                 double DAZ = sunH.azimuth - moonH.azimuth;
-                double W = SD * (1 - Cos(ARCV.ToRadians()) * Cos(DAZ.ToRadians()));
-                double q = (ARCV - (11.8371 - 6.3226 * W + 0.7319 * Pow(W, 2) - 0.1018 * Pow(W, 3))) / 10;
+                double Wprime = SDprime * (1 - Cos(ARCV.ToRadians()) * Cos(DAZ.ToRadians()));
+                double q = (ARCV - (11.8371 - 6.3226 * Wprime + 0.7319 * Pow(Wprime, 2) - 0.1018 * Pow(Wprime, 3))) / 10;
 
                 if (q > VisibilityCutoff[(int)visibility]) break;
             }

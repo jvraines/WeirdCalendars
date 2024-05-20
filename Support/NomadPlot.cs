@@ -21,6 +21,7 @@ namespace WeirdCalendars.Support {
             AlcyoneYearRA = Sky.ApparentPositionStar(AlcyoneRA, AlcyoneDec, Time.J2000, Time.JulianEphemerisDay(year, 5, 1), AlcyonePropRA, AlcyonePropDec).rightAscension;
             FindYearBounds();
             YearDays = yearStart[1] - yearStart[0];
+            //Console.WriteLine($"{Time.ToDateTime(yearStart[0]).ToString("M/d/yyyy")} {YearDays}");
         }
 
         private int[] yearStart = new int[2];
@@ -46,12 +47,11 @@ namespace WeirdCalendars.Support {
 
         private void FindYearBounds() {
             // "The year begins with the month whose 1st day occurs when the Moon passes the Pleiades immediately after a dark moon (when the crescent Moon first becomes visible), so at that time the age of the Moon is approximately 1 day."
-            // We will take this to mean the moon that arrives at Alcyone in the shortest time after it becomes a visible crescent.
             for (int y = 0; y < 2; y++) {
                 double minDate = 0;
                 TimeSpan minDiff = TimeSpan.FromHours(24);
                 double jde = Time.JulianEphemerisDay(Year + y, 3, 1);
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 3; i++) {
                     jde = Luna.FirstVisibleCrescent(jde, SteppeLongitude, SteppeLatitude);
                     TimeSpan thisDiff = AlcyoneYearRA - TopoMoonRA(jde);
                     if (thisDiff >= TimeSpan.Zero) {
