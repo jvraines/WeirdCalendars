@@ -8,12 +8,16 @@ namespace WeirdCalendars {
         public override Uri Reference => new Uri("https://myweb.ecu.edu/mccartyr/lspc.html");
 
         // Author mentions a year 141 but never correlates it
-        protected override DateTime SyncDate => new DateTime(2023, 1, 1);
+        protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
+
+        protected override int GetRealDaysInYear(int year, int era) => base.GetDaysInYear(year, era);
 
         public override int GetDaysInYear(int year, int era) {
             return 365;
         }
+
+        protected override int GetRealDaysInMonth(int year, int month, int era) => base.GetDaysInMonth(year, month, era);
 
         public override int GetDaysInMonth(int year, int month, int era) {
             switch(month) {
@@ -23,28 +27,25 @@ namespace WeirdCalendars {
                     return 30;
                 default:
                     return base.GetDaysInMonth(year, month, era);
-            } 
+            }
         }
 
-        public override DayOfWeek GetDayOfWeek(DateTime time) {
-            int i = 0;
-            if (IsLeapYear(time.Year) && time.Month > 2) i = -1;
-            if (time.Month == 12 && time.Day == 31 && time.Hour >= 12 && i == -1) i = 0;
-            return (DayOfWeek)((GetDayOfYear(time) + i - 1) % 7);
-        }
+        public override DayOfWeek GetDayOfWeek(DateTime time) => (DayOfWeek)((GetDayOfYear(time) - 1) % 7);
 
         public override bool IsLeapDay(int year, int month, int day, int era) {
             ValidateDateParams(year, month, day, era);
             return false;
         }
 
+        protected int GetHoursInDay(int year, int month, int day) {
+            ValidateDateParams(year, month, day);
+            return month == 12 && day == 30 || month == 1 && day == 1 || month == 2 && IsLeapYear(year) && (day == 25 || day == 26) ? 36 : 24;
+        }
+
         public override DateTime ToDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, int era) {
             ValidateDateParams(year, month, day, era);
             int maxHour = month == 12 && day == 30 || month == 1 && day == 1 || month == 2 && IsLeapYear(year) && (day == 25 || day == 26) ? 35 : 23;
             if (hour < 0 || hour > maxHour) throw new ArgumentOutOfRangeException("hour");
-            if (minute < 0 || minute > 59) throw new ArgumentOutOfRangeException("minute");
-            if (second < 0 || second > 59) throw new ArgumentOutOfRangeException("second");
-            if (millisecond < 0 || millisecond > 999) throw new ArgumentOutOfRangeException("millisecond");
 
             if (month == 12 && day == 30 && hour > 23) {
                 day = 31;
@@ -78,15 +79,9 @@ namespace WeirdCalendars {
             return new DateTime(year, month, day, hour, minute, second, millisecond);
         }
 
-        private DateTime LastTime;
-        private (int Year, int Month, int Day, TimeSpan TimeOfDay) LastLocalDate;
-
         protected override (int Year, int Month, int Day, TimeSpan TimeOfDay) ToLocalDate(DateTime time) {
-            if (time == LastTime) return LastLocalDate;
-            int year = time.Year;
-            int month = time.Month;
-            int day = time.Day;
-            int hour = time.Hour;
+            var (year, month, day, tod) = base.ToLocalDate(time);
+            int hour = tod.Hours;     
             if (month == 12 && day == 31) {
                 if (hour < 12) {
                     day = 30;
@@ -113,9 +108,7 @@ namespace WeirdCalendars {
                 else if (day == 27) hour += 12;
                 day--;
             }
-            LastLocalDate = (year, month, day, new TimeSpan(0, hour, time.Minute, time.Second, time.Millisecond));
-            LastTime = time;
-            return LastLocalDate;
+            return (year, month, day, new TimeSpan(0, hour, tod.Minutes, tod.Seconds, tod.Milliseconds));
         }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {

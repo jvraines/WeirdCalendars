@@ -52,10 +52,7 @@ namespace WeirdCalendars {
 
         protected readonly string NoSpecialDay = "(none)";
 
-        /// <summary>
-        /// Exception indicating that the requested day of week cannot be represented as a value of the DateTime.DayOfWeek enumeration.
-        /// </summary>
-        public InvalidOperationException BadWeekday = new InvalidOperationException ("Date cannot be represented as DayOfWeek. Use GetDayOfWeekWC() or ToStringWC() instead.");
+        protected InvalidOperationException BadWeekday = new InvalidOperationException ("Date cannot be represented as DayOfWeek. Use GetDayOfWeekWC() or ToStringWC() instead.");
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.SolarCalendar;
 
@@ -104,11 +101,14 @@ namespace WeirdCalendars {
         }
 
         /// <summary>
-        /// Number of days in one week.
+        /// Number of days in one week. Zero if weeks are not used.
         /// </summary>
         protected virtual int DaysInWeek => 7;
-        
+
+        private static NotSupportedException NoWeeks = new NotSupportedException("There are no weeks or weekdays in this calendar.");
+
         public override DayOfWeek GetDayOfWeek(DateTime time) {
+            if (DaysInWeek == 0) throw NoWeeks;
             ValidateDateTime(time);
             return time.DayOfWeek;
         }
@@ -117,6 +117,8 @@ namespace WeirdCalendars {
             ValidateDateTime(time);
             return ToLocalDate(time).Day;
         }
+
+        protected virtual int GetRealDaysInMonth(int year, int month, int era) => GetDaysInMonth(year, month, era);
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
@@ -149,12 +151,14 @@ namespace WeirdCalendars {
         }
 
         public override int GetDayOfYear(DateTime time) {
-            ValidateDateTime(time); 
+            ValidateDateTime(time);
             var ymd = ToLocalDate(time);
             int d = 0;
             for (int m = FirstMonth; m < ymd.Month; m++) d += GetDaysInMonth(ymd.Year, m);
             return d + ymd.Day + 1 - GetFirstDayOfMonth(ymd.Year, ymd.Month);
         }
+
+        protected virtual int GetRealDaysInYear(int year, int era) => GetDaysInYear(year, era);
 
         public override int GetDaysInYear(int year, int era) {
             ValidateDateParams(year, era);
@@ -245,6 +249,7 @@ namespace WeirdCalendars {
         }
 
         public override DateTime AddWeeks(DateTime time, int weeks) {
+            if (DaysInWeek == 0) throw NoWeeks;
             ValidateDateTime(time);
             return time.AddDays(weeks * DaysInWeek);
         }
@@ -333,6 +338,7 @@ namespace WeirdCalendars {
             else if (time > MaxSupportedDateTime) throw new ArgumentOutOfRangeException("time", $"Time must be less than or equal to {MaxSupportedDateTime}.");
         }
 
+        ///<remarks>Expects real day and hour values. Day-stretching calendars must override to fix up arguments before passing them here.</remarks>
         public override DateTime ToDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, int era) {
             ValidateDateParams(year, month, day, era);
             ValidationEnabled = false;
@@ -346,52 +352,47 @@ namespace WeirdCalendars {
             double diffDays = new TimeSpan(day - GetFirstDayOfMonth(year, month), hour, minute, second, millisecond).TotalDays / TimescaleFactor;
             while (month != FirstMonth) {
                 month--;
-                diffDays += GetDaysInMonth(year, month, era);
+                diffDays += GetRealDaysInMonth(year, month, era);
             }
             while (cYear < eYear) {
-                diffDays -= GetDaysInYear(year, era);
+                diffDays -= GetRealDaysInYear(year, era);
                 cYear++;
                 year++;
             }
             while (cYear > eYear) {
                 cYear--;
                 year--;
-                diffDays += GetDaysInYear(year, era);
+                diffDays += GetRealDaysInYear(year, era);
             }
             ValidationEnabled = true;
-            try {
-                return SyncDate.AddDays(diffDays);
-            }
-            catch (Exception x) {
-                throw x;
-            }
+            return SyncDate.AddDays(diffDays);
         }
 
-        private DateTime LastTime = DateTime.MaxValue;
+        protected DateTime LastTime = DateTime.MaxValue;
         private (int Year, int Month, int Day, TimeSpan TimeOfDay) LastLocalDate;
 
         /// <summary>
         /// Converts DateTime to date and time values.
         /// </summary>
+        /// <remarks>Returns true day and time of day. Day-stretching calendars must fix up the return values.</remarks>
         protected virtual (int Year, int Month, int Day, TimeSpan TimeOfDay) ToLocalDate(DateTime time) {
-            // This method disregards eras and works strictly with SyncDate-based years
             if (time == LastTime) return LastLocalDate;
             ValidationEnabled = false;
             double diffDays = (time - SyncDate).TotalDays / TimescaleFactor;
             int year = SyncDate.Year + SyncOffset;
             while (diffDays < 0) {
                 year--;
-                diffDays += GetDaysInYear(year);
+                diffDays += GetRealDaysInYear(year, 0);
             }
-            int yearDays = GetDaysInYear(year);
+            int yearDays = GetRealDaysInYear(year, 0);
             while (diffDays >= yearDays) {
                 year++;
                 diffDays -= yearDays;
-                yearDays = GetDaysInYear(year);
+                yearDays = GetRealDaysInYear(year, 0);
             }
             int month = FirstMonth;
             while (diffDays > 0) {
-                double monthDays = GetDaysInMonth(year, month);
+                double monthDays = GetRealDaysInMonth(year, month, 0);
                 if (diffDays >= monthDays) {
                     diffDays -= monthDays;
                     month++;
@@ -401,6 +402,7 @@ namespace WeirdCalendars {
             TimeSpan clock = TimeSpan.FromSeconds(Math.Round((diffDays - Math.Truncate(diffDays)) * 86400));
             LastLocalDate = (year, month, (int)diffDays + GetFirstDayOfMonth(year, month), clock);
             LastTime = time;
+            ValidationEnabled = true;
             return LastLocalDate;
         }
         
@@ -486,5 +488,7 @@ namespace WeirdCalendars {
             if (d2 != null) s = s.ReplaceUnescaped("dddd", "~~~~").ReplaceUnescaped("ddd", "~~~").ReplaceUnescaped("dd", $"'{d2}'").ReplaceUnescaped("d", $"'{d1}'").ReplaceUnescaped("~~~~", "dddd").ReplaceUnescaped("~~~", "ddd");
             return s;
         }
+
+        internal virtual void OnDateFormatted() { }
     }
 }

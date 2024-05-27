@@ -108,7 +108,9 @@ namespace WeirdCalendars {
             //catch { }
             //Call the regular method with possibly fixed-up format
             if (format.Length == 1) format = "%" + format;
-            return time.ToString(format, culture);
+            string f = time.ToString(format, culture);
+            cal.OnDateFormatted();
+            return f;
         }
 
         /// <summary>
@@ -185,6 +187,8 @@ namespace WeirdCalendars {
             }
             return $"{i}{suffix}";
         }
+
+        public static string Capitalize(this string s) => $"{s.Substring(0, 1).ToUpper()}{s.Substring(1).ToLower()}";
 
         public static string ToBase(this int value, int radix) {
             if (radix == 10) return value.ToString();
