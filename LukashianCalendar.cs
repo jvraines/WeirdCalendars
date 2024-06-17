@@ -13,6 +13,9 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 12, 22, 21, 02, 4);
         protected override int SyncOffset => 3900;
 
+        // Maximum valid date for season calculation from VSOP87.
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
+
         public int GetBeeps(DateTime time) {
             ValidateDateTime(time);
             return ToLocalDate(time).Beeps;

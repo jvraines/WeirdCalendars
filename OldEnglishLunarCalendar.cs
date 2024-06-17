@@ -14,7 +14,7 @@ namespace WeirdCalendars {
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunarCalendar;
 
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1);
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public override int GetDaysInYear(int year, int era) {
             ValidateDateParams(year, era);

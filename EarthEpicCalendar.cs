@@ -11,7 +11,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2022, 11, 7);
         protected override int SyncOffset => 9701;
         public override DateTime MinSupportedDateTime => new DateTime(2, 1, 1);
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1);
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 

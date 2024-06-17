@@ -15,7 +15,7 @@ namespace WeirdCalendars {
         /// Specify a cycle in short format by using one of these codes alone. The CurrentCycle is not changed.
         /// </summary>
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
-            ("R", "Reference cycle"),
+            ("R", "Reference"),
             ("L", "Lunar cycle"),
             ("W", "Week cycle"),
             ("S", "Solar cycle")
@@ -107,7 +107,14 @@ namespace WeirdCalendars {
                 if (format == CycleCode[c]) {
                     saveCycle = CurrentCycle;
                     CurrentCycle = (Cycle)c;
-                    fx.Format = @"Yyy-\MMM-Ddd";
+                    if (CurrentCycle == Cycle.Week) {
+                        int dd = GetDayOfYear(time) - 1;
+                        int q = dd / 91 + 1;
+                        int w = dd % 91 / 7 + 1;
+                        int d = dd % 91 % 7 + 1;
+                        fx.Format = $@"Yyy-Q{q:00}-W{w:00}-\D{d:00}";
+                    }
+                    else fx.Format = @"Yyy-\MMM-Ddd";
                     break;
                 }
             }

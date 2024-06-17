@@ -49,7 +49,7 @@ namespace WeirdCalendars {
         }
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
-            SetNames(dtfi, new string[] { "Rising Season", "Middle Season", "Waning Season", "", "", "", "", "", "", "", "", "", "" });
+            SetNames(dtfi, new string[] { "Rising", "Middle", "Waning", "", "", "", "", "", "", "", "", "", "" });
             dtfi.LongDatePattern = dtfi.LongDatePattern.Replace("dddd,", "").Replace("ddd", "").Trim();
         }
 

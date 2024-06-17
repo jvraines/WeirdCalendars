@@ -7,7 +7,7 @@ namespace WeirdCalendars {
         public override string Author => "Denis Bredelet";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/The_Monotonic_Calendar");
 
-        protected override DateTime SyncDate => new DateTime(2023, 12, 26);
+        protected override DateTime SyncDate => new DateTime(2023, 12, 29);
         protected override int SyncOffset => 1;
 
         public override int GetMonthsInYear(int year, int era) {

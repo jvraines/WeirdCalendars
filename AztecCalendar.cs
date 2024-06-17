@@ -13,7 +13,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
  
         // Maximum valid date for season calculation from AA.
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1);
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public override string Notes => "Using the Ruben Ochoa Count.";
 

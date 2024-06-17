@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -11,6 +12,10 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 11, 16, 20, 9, 35);
         protected override int SyncOffset => -1701;
 
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
+            ("n", "Fesoan orbit")
+        };
+
         public enum DayOfWeekWC {
             First,
             Second,
@@ -21,6 +26,8 @@ namespace WeirdCalendars {
         protected override double TimescaleFactor => 4.69;
 
         protected override long HourTicks => TimeSpan.TicksPerDay / 4; // "Phases" -- there are no further subdivisions
+
+        public double GetTime(DateTime time) => ToLocalDate(time).TimeOfDay.Ticks / (double)HourTicks;
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);
@@ -53,7 +60,9 @@ namespace WeirdCalendars {
             return false;
         }
 
-        private static string[] Moons = new string[] { "Firstmoon", "Secondmoon", "Thirdmoon", "Fourthmoon", "Fifthmoon", "Sixthmoon", "Seventhmoon", "Eighthmoon", "Ninthmoon", "Tenthmoon", "Eleventhmoon", "Twelfthmoon", "Thirteenthmoon", "Fourteenthmoon", "Fifteenthmoon", "Sixteenthmoon", "Seventeenthmoon", "Eighteenthmoon" };
+        public int GetFesoanOrbit(DateTime time) => (int)Math.Ceiling(ToLocalDate(time).Year / 4.0);
+        
+            private static string[] Moons = new string[] { "Firstmoon", "Secondmoon", "Thirdmoon", "Fourthmoon", "Fifthmoon", "Sixthmoon", "Seventhmoon", "Eighthmoon", "Ninthmoon", "Tenthmoon", "Eleventhmoon", "Twelfthmoon", "Thirteenthmoon", "Fourteenthmoon", "Fifteenthmoon", "Sixteenthmoon", "Seventeenthmoon", "Eighteenthmoon" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             string[] ma = new string[13];
@@ -63,14 +72,14 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            var ymd = ToLocalDate(time);
-            string hour = (ymd.TimeOfDay.Ticks / (double)HourTicks).ToString("0.000");
+            int month = ToLocalDate(time).Month;
+            string hour = GetTime(time).ToString("0.000");
             fx.LongTimePattern = hour;
             fx.ShortTimePattern = hour;
-            fx.Format = format.ReplaceUnescaped("hh", hour).ReplaceUnescaped("h", hour).ReplaceUnescaped("m", "").ReplaceUnescaped("s", ""); 
-            if (ymd.Month > 13) {
-                fx.MonthFullName = Moons[ymd.Month - 1];
-                fx.MonthShortName = ymd.Month.ToOrdinal();
+            fx.Format = format.ReplaceUnescaped("hh", hour).ReplaceUnescaped("h", hour).ReplaceUnescaped("m", "").ReplaceUnescaped("s", "").ReplaceUnescaped("n", GetFesoanOrbit(time).ToString());
+            if (month > 13) {
+                fx.MonthFullName = Moons[month - 1];
+                fx.MonthShortName = month.ToOrdinal();
             }
             return fx;
         }

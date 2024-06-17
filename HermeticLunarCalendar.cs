@@ -23,7 +23,7 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2020, 3, 25);
         protected override int SyncOffset => 3000;
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1); //bound for astronomical accuracy
+        public override DateTime MaxSupportedDateTime => VSOPLimit; //bound for astronomical accuracy
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 

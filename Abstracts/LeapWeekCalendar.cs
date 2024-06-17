@@ -9,6 +9,7 @@ namespace WeirdCalendars {
         }
 
         public override int GetDaysInYear(int year, int era) {
+            ValidateDateParams(year, era);
             return IsLeapYear(year) ? 371 : 364;
         }
     }

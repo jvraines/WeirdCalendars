@@ -15,7 +15,7 @@ namespace WeirdCalendars {
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 
         // Maximum valid date for season calculation from VSOP87.
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1);
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public AstronomicSolilunarCalendar() => Title = "Astronomic Soli-Lunar Calendar";
 

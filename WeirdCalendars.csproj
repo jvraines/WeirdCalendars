@@ -5,7 +5,13 @@
 	 <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
 
   <ItemGroup>
     <Compile Remove="Support\Lookup.cs" />

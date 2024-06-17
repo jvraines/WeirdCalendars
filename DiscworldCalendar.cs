@@ -69,7 +69,7 @@ namespace WeirdCalendars {
                 if (month == 6) result = "Small Gods Day";
                 else if (month == 19) result = "Alls Fallow";
             }
-            else if (day == 23 && month == 8 || month == 21) result = "Soul Cake Tuesday";
+            else if (day == 23 && (month == 8 || month == 21)) result = "Soul Cake Tuesday";
             return result;
         }
 

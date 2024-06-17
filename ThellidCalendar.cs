@@ -12,7 +12,7 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime (2022, 12, 22);
         protected override int SyncOffset => 10001;
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1); //Limit of VSOP87 accuracy
+        public override DateTime MaxSupportedDateTime => VSOPLimit; //Limit of VSOP87 accuracy
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);

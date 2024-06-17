@@ -46,7 +46,7 @@ namespace WeirdCalendars {
             return StartsWithSplitWeek(year) || StartsWithSplitWeek(year + 1);
         }
 
-        private bool StartsWithSplitWeek(int year) => year % 541 % 62 % 17 % 6 == 4;
+        private bool StartsWithSplitWeek(int year) => year % 896 % 62 % 17 % 6 == 4;
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             dtfi.FirstDayOfWeek = DayOfWeek.Monday;

@@ -12,6 +12,9 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 5, 9);
         protected override int SyncOffset => 3680;
 
+        // Maximum valid date for season calculation from VSOP87.
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
+
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {

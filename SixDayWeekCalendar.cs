@@ -11,7 +11,7 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2021, 3, 21, 6, 0, 0);
         protected override int SyncOffset => 0;
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1); // Limit of VSOP87 accuracy
+        public override DateTime MaxSupportedDateTime => VSOPLimit; // Limit of VSOP87 accuracy
 
         protected override int DaysInWeek => 6;
 

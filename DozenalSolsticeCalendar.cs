@@ -11,7 +11,7 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2023, 12, 22);
         protected override int SyncOffset => 9564;
-        public override DateTime MaxSupportedDateTime => new DateTime(6000, 1, 1);
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public new enum DayOfWeekWC {
             Blankday = -1,

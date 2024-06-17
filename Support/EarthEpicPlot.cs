@@ -94,7 +94,7 @@ namespace WeirdCalendars {
             // Find subsequent new moons and moon start days through end of year
             while (lastNewMoon < yearStart[1]) {
                 double nextNewMoon = Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28).ToLastUTMidnight();
-                moons[moonPtr++] = (int)(lastNewMoon - yearStart[0] - 1);
+                moons[moonPtr++] = (int)(lastNewMoon - yearStart[0]);
                 lastNewMoon = nextNewMoon;
             }
             moons[moonPtr] = yearStart[1];

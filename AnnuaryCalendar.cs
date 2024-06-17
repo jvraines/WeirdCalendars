@@ -14,7 +14,7 @@ namespace WeirdCalendars {
 
         private int GetDaysInLeapMonth(int year) {
             int c = year % 100;
-            return c == 99 || (c == 0 && year % 400 != 0) ? 29 : 30;
+            return c == 99 || c == 0 && year % 400 != 0 ? 29 : 30;
         }
 
         public override int GetDaysInMonth(int year, int month, int era) {

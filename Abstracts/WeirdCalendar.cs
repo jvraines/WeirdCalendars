@@ -65,6 +65,8 @@ namespace WeirdCalendars {
 
         // Customizable max year offset
         protected virtual int MaxYearOffset => SyncOffset;
+
+        protected DateTime VSOPLimit = new DateTime(6000, 1, 1);
         
         /// <summary>
         /// A List of tuples describing custom format strings available for use with DateTime.ToStringWC.
