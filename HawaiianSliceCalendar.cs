@@ -12,7 +12,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
-            ("q", "Quarter")
+            ("S", "Month style")
         };
 
         public override int GetDaysInMonth(int year, int month, int era) {
@@ -28,16 +28,22 @@ namespace WeirdCalendars {
             return StartsWithSplitWeek(year) ? 367 : StartsWithSplitWeek(year + 1) ? 368 : 364;
         }
 
-        public string GetQuarter(DateTime time) {
-            switch (GetDayOfYear(time) / 91) {
-                case 0:
-                    return "Pineapple";
-                case 1:
-                    return "Ham";
-                case 2:
-                    return "Jalapeño";
-                default:
-                    return "Tomato";
+        public string GetMonthStyle(DateTime time) {
+            if (month > 9 && StartsWithSplitWeek(year + 1)) {
+                return month == 11 ? "Jalapeño" : "Tomato";
+            }
+            else if (month <= 3 && StartsWithSplitWeek(year) {
+                return month == 1 ? "Ham" : month == 2 ? "Tomato" : "Jalapeño";
+            }
+            else {
+                switch (month % 3) {
+                    case 1:
+                        return "Pineapple";
+                    case 2:
+                        return "Ham";
+                    default:
+                        return "Tomato";
+                }
             }
         }
 
@@ -54,7 +60,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            fx.Format = format.ReplaceUnescaped("q", $"'{GetQuarter(time)}'");
+            fx.Format = format.ReplaceUnescaped("S", $"'{GetMonthStyle(time)}'");
             return fx;
         }
     }
