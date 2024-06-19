@@ -12,7 +12,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 12, 22);
         protected override int SyncOffset => -443;
 
-        public override DateTime MaxSupportedDateTime => new DateTime(3000, 1, 1);
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
             ("n", "Festival")
@@ -49,7 +49,7 @@ namespace WeirdCalendars {
         private static Dictionary<int, (int, int, int, int)> Movables = new Dictionary<int, (int, int, int, int)>();
 
         public string GetFestival(int year, int month, int day) {
-            string f = null;
+            string f = NoSpecialDay;
             switch (month) {
                 case 1:
                     if (day == 1) f = "Yule Day";
@@ -108,10 +108,10 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            if (format.Contains("n")) {
+            if (format.FoundUnescaped("n")) {
                 var ld = ToLocalDate(time);
                 string f = GetFestival(ld.Year, ld.Month, ld.Day);
-                if (f != null) fx.Format = format.ReplaceUnescaped("n", $"'{f}'");
+                fx.Format = format.ReplaceUnescaped("n", $"'{f}'");
             }
             return fx;
         }

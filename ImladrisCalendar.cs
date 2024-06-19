@@ -134,7 +134,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);
-            fx.Format = fx.Format.ReplaceUnescaped("n", GetYen(time).ToString());
+            if (format.FoundUnescaped("n")) fx.Format = fx.Format.ReplaceUnescaped("n", GetYen(time).ToString());
             return fx;
         }
     }

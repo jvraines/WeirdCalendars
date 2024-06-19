@@ -140,6 +140,13 @@ namespace WeirdCalendars {
             return Regex.Replace(format, $@"[""'][^""']+[""']|\\.|({safeSearch})", new MatchEvaluator(match => match.Groups[1].Value == "" ? match.Value : replace));
         }
 
+        internal static bool FoundUnescaped(this string format, string search) {
+            string safeSearch = Regex.Escape(search);
+            MatchCollection mm = Regex.Matches(format, $@"[""'][^""']+[""']|\\.|({safeSearch})");
+            foreach (Match m in mm) if (m.Groups[1].Value != "") return true;
+            return false;
+        }
+
         
         /// <summary>
         /// Parses a Pascal case string into a phrase based on capitals.
@@ -204,5 +211,7 @@ namespace WeirdCalendars {
         public static double ToLastUTMidnight(this double jd, bool isDynamical = true) {
             return (int)((isDynamical ? jd.JulianUniversalDay() : jd) + 0.5) - 0.5;
         }
+
+        public static int FloorMod(this int a, int n) => a - n * (int)Math.Floor((double)a / n);
     }
 }

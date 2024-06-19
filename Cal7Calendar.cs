@@ -48,10 +48,12 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            int day = ToLocalDate(time).Day;
-            int w = (day - 1) / 7 + 1;
-            int d = (day - 1) % 7 + 1;
-            fx.Format = format.ReplaceUnescaped("I", $"yyyy-M-{w}-{d}");
+            if (format.FoundUnescaped("I")) {
+                int day = ToLocalDate(time).Day;
+                int w = (day - 1) / 7 + 1;
+                int d = (day - 1) % 7 + 1;
+                fx.Format = format.ReplaceUnescaped("I", $"yyyy-M-{w}-{d}");
+            }
             return fx;
         }
     }

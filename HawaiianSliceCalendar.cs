@@ -12,7 +12,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
-            ("S", "Month style")
+            ("i", "Month ingredient")
         };
 
         public override int GetDaysInMonth(int year, int month, int era) {
@@ -28,21 +28,21 @@ namespace WeirdCalendars {
             return StartsWithSplitWeek(year) ? 367 : StartsWithSplitWeek(year + 1) ? 368 : 364;
         }
 
-        public string GetMonthStyle(DateTime time) {
+        public string GetMonthIngredient(int year, int month) {
             if (month > 9 && StartsWithSplitWeek(year + 1)) {
                 return month == 11 ? "Jalapeño" : "Tomato";
             }
-            else if (month <= 3 && StartsWithSplitWeek(year) {
+            else if (month <= 3 && StartsWithSplitWeek(year)) {
                 return month == 1 ? "Ham" : month == 2 ? "Tomato" : "Jalapeño";
             }
             else {
                 switch (month % 3) {
                     case 1:
-                        return "Pineapple";
-                    case 2:
-                        return "Ham";
-                    default:
                         return "Tomato";
+                    case 2:
+                        return "Pineapple";
+                    default:
+                        return "Ham";
                 }
             }
         }
@@ -60,7 +60,10 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            fx.Format = format.ReplaceUnescaped("S", $"'{GetMonthStyle(time)}'");
+            if (format.FoundUnescaped("i")) {
+                var ymd = ToLocalDate(time);
+                fx.Format = format.ReplaceUnescaped("i", $"'{GetMonthIngredient(ymd.Year, ymd.Month)}'");
+            }
             return fx;
         }
     }

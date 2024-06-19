@@ -108,8 +108,10 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
             CustomizeTimes(fx, time);
-            var ld = ToLocalDate(time);
-            fx.Format = format.ReplaceUnescaped("n", $"'{GetHolyDay(ld.Year, ld.Month, ld.Day)}'");
+            if (format.FoundUnescaped("n")) {
+                var ld = ToLocalDate(time);
+                fx.Format = format.ReplaceUnescaped("n", $"'{GetHolyDay(ld.Year, ld.Month, ld.Day)}'");
+            }
             return fx;
         }
     }

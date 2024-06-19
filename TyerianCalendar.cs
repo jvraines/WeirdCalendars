@@ -80,9 +80,11 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
             CustomizeTimes(fx, time);
-            var ld = ToLocalDate(time);
-            string ds = $"{ld.Day}/{ld.Month}/{ld.Year}/{ld.Year / 50}";
-            fx.Format = fx.Format.ReplaceUnescaped("n", ds);
+            if (format.FoundUnescaped("n")) {
+                var ld = ToLocalDate(time);
+                string ds = $"{ld.Day}/{ld.Month}/{ld.Year}/{ld.Year / 50}";
+                fx.Format = fx.Format.ReplaceUnescaped("n", ds);
+            }
             return fx;
         }
     }

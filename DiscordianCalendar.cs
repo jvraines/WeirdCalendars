@@ -76,7 +76,7 @@ namespace WeirdCalendars {
         }
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);
-            fx.Format = format.ReplaceUnescaped("n", $"'{GetHolyDay(time)}'");
+            if (format.FoundUnescaped("n")) fx.Format = format.ReplaceUnescaped("n", $"'{GetHolyDay(time)}'");
             return fx;
         }
     }

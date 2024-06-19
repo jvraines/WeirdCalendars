@@ -55,14 +55,10 @@ namespace WeirdCalendars {
             return diffDays;
         }
 
-        private int FloorMod(int a, int n) {
-            return a - n * (int)Math.Floor((double)a / n);
-        }
-
         private static string[] DaySignName = { "Cipactli", "Ehēcatl", "Calli", "Cuetzpalin", "Cōātl", "Miquiztli", "Mazātl", "Tōchtli", "Ātl", "Itzcuīntli", "Ozomahtli", "Malīnalli", "Ācatl", "Ocēlōtl", "Cuāuhtli", "Cōzcacuāuhtli", "Ōlīn", "Tecpatl", "Quiyahuitl", "Xōchitl" };
 
-        private int DayNumber(int d) => FloorMod(9 + d, 13) + 1;
-        private int DaySign(int d) => FloorMod(15 + d, 20);
+        private int DayNumber(int d) => (9 + d).FloorMod(13) + 1;
+        private int DaySign(int d) => (15 + d).FloorMod(20);
 
         public string GetDayCount(int year, int month, int day) {
             ValidateDateParams(year, month, day, 0);
@@ -75,7 +71,7 @@ namespace WeirdCalendars {
             int d = DiffDays(year, month, day);
             int n = DayNumber(d);
             int s = DaySign(d);
-            return $"1-{DaySignName[FloorMod(s - n + 1, 20)]}";
+            return $"1-{DaySignName[(s - n + 1).FloorMod(20)]}";
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {

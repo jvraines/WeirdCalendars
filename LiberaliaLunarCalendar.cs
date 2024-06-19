@@ -67,7 +67,8 @@ namespace WeirdCalendars {
             int cycle = GetCycle(time);
             fx.LongDatePattern = fx.LongDatePattern.Replace("yyyy", "yyy");
             fx.ShortDatePattern = cycle > 0 ? $"{cycle}-" : "" + $"yyy-MM-{t:D2}-{d}";
-            fx.Format = format.ReplaceUnescaped("c", cycle.ToString()).ReplaceUnescaped("n", t.ToString());
+            fx.Format = format.ReplaceUnescaped("c", cycle.ToString());
+            if (format.FoundUnescaped("n")) fx.Format = fx.Format.ReplaceUnescaped("n", t.ToString());
             return fx;
         }
 

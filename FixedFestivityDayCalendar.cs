@@ -73,13 +73,15 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            int ad = AdjustedDay(time);
-            int w = (ad - 1) / 7 + 1;
-            var ld = ToLocalDate(time);
-            int d;
-            if (IsIntercalaryDay(ld.Year, ld.Month, ld.Day)) d = 0;
-            else d = (ad - 1) % 7 + 1;
-            fx.Format = format.ReplaceUnescaped("I", $"{ld.Month:00}-{w}-{d}");
+            if (format.FoundUnescaped("I")) {
+                int ad = AdjustedDay(time);
+                int w = (ad - 1) / 7 + 1;
+                var ld = ToLocalDate(time);
+                int d;
+                if (IsIntercalaryDay(ld.Year, ld.Month, ld.Day)) d = 0;
+                else d = (ad - 1) % 7 + 1;
+                fx.Format = format.ReplaceUnescaped("I", $"{ld.Month:00}-{w}-{d}");
+            }
             return fx;
         }
     }

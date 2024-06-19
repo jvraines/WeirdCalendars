@@ -163,7 +163,8 @@ namespace WeirdCalendars {
                 fx.DayFullName = d;
                 fx.DayShortName = d.Substring(0, 3);
             }
-            fx.Format = format.ReplaceUnescaped("n", $"'{GetFestival(time)}'").ReplaceUnescaped("b", $"'{GetSymbolized(time)}'");
+            if (format.FoundUnescaped("n")) fx.Format = format.ReplaceUnescaped("n", $"'{GetFestival(time)}'");
+            if (format.FoundUnescaped("b")) fx.Format = fx.Format.ReplaceUnescaped("b", $"'{GetSymbolized(time)}'");
             return fx;
         }
 

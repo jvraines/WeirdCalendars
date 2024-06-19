@@ -12,6 +12,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
 
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
+
         protected override (int Year, int Month, int Day, TimeSpan TimeOfDay) ToLocalDate(DateTime time) => (time.Year, time.Month, time.Day, time.TimeOfDay);
 
         public override DateTime ToDateTime(int year, int month, int day, int hour, int minute, int second, int millisecond, int era) => new DateTime(year, month, day, hour, minute, second, millisecond);

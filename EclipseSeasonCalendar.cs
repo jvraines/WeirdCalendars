@@ -78,7 +78,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            fx.Format = format.ReplaceUnescaped("e", GetEclipse(time));
+            if (format.FoundUnescaped("e")) fx.Format = format.ReplaceUnescaped("e", GetEclipse(time));
             return fx;
         }
     }

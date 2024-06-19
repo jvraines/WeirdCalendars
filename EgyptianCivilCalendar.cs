@@ -70,7 +70,9 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format)
         {
             FormatWC fx = new FormatWC(format, dtfi);
-            fx.Format = format.ReplaceUnescaped("nn", $"'{GetDecanDeity(time)}'").ReplaceUnescaped("n", GetDecanNumber(time).ToString());
+            if (format.FoundUnescaped("nn")) format = format.ReplaceUnescaped("nn", $"'{GetDecanDeity(time)}'");
+            if (format.FoundUnescaped("n")) format = format.ReplaceUnescaped("n", GetDecanNumber(time).ToString());
+            fx.Format = format;
             return fx;
         }
     }

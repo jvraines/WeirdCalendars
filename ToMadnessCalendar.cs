@@ -10,8 +10,8 @@ namespace WeirdCalendars {
         public override string Author => "Denis Bredelet";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/To_Madness_Calendar");
 
-        protected override DateTime SyncDate => new DateTime(2050, 1, 2);
-        protected override int SyncOffset => -2050;
+        protected override DateTime SyncDate => new DateTime(2023, 12, 28);
+        protected override int SyncOffset => -2049;
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);
@@ -54,6 +54,12 @@ namespace WeirdCalendars {
         }
 
         private static string[] MonthName = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Anguish", "Stasis", "Reprieve", "Delusion", "Demons", "Tatters", "Absurdum", "Insanity" };
+
+        internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
+            string[] m = MonthName.Take(13).ToArray();
+            string[] ma = m.Select(x => x.Substring(0, 3)).ToArray();
+            SetNames(dtfi, m, ma);
+        }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);

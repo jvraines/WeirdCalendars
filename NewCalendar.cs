@@ -81,10 +81,12 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            var ld = ToLocalDate(time);
-            int bm = (ld.Month + 1) / 2;
-            int dy = ld.Day + ((ld.Month & 1) == 0 ? 30 : 0);
-            fx.Format = format.ReplaceUnescaped("I", $"yyyy-{bm}-{dy:D2}");
+            if (format.FoundUnescaped("I")) {
+                var ld = ToLocalDate(time);
+                int bm = (ld.Month + 1) / 2;
+                int dy = ld.Day + ((ld.Month & 1) == 0 ? 30 : 0);
+                fx.Format = format.ReplaceUnescaped("I", $"yyyy-{bm}-{dy:D2}");
+            }
             return fx;
         }
     }

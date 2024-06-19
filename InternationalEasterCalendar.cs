@@ -125,7 +125,7 @@ namespace WeirdCalendars {
                     fx.MonthShortName = dtfi.AbbreviatedMonthNames[9];
                 }
             }
-            fx.Format = format.ReplaceUnescaped("n", $"'{GetTide(time)}'");
+            if (format.FoundUnescaped("n")) fx.Format = format.ReplaceUnescaped("n", $"'{GetTide(time)}'");
             return fx;
         }
     }

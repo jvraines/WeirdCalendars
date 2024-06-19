@@ -139,8 +139,10 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx =  base.GetFormatWC(dtfi, time, format);
-            fx.LongDatePattern += $" '{GetGalacticSignature(time)} {GetKin(time)}-Kin{(IsClearSign(time) ? "★" : "")}{(IsGalacticActivationPortal(time) ? " ⦒⦑" : "")}'";
-            fx.Format = format.ReplaceUnescaped("n", $"'{GetGalacticSignature(time)}'").ReplaceUnescaped("k", $"{GetKin(time)}");
+            string gs = GetGalacticSignature(time);
+            int kn = GetKin(time);
+            fx.LongDatePattern += $" '{gs} {kn}-Kin{(IsClearSign(time) ? "★" : "")}{(IsGalacticActivationPortal(time) ? " ⦒⦑" : "")}'";
+            fx.Format = format.ReplaceUnescaped("n", $"'{gs}'").ReplaceUnescaped("k", $"{kn}");
             return fx;
         }
     }

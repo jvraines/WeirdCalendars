@@ -41,8 +41,10 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);
             FixNegativeYears(fx, time);
-            var ymd = ToLocalDate(time);
-            fx.Format = fx.Format.ReplaceUnescaped("n", $"\"{GetFeast(ymd.Year, ymd.Month, ymd.Day)}\"");
+            if (format.FoundUnescaped("n")) {
+                var ymd = ToLocalDate(time);
+                fx.Format = fx.Format.ReplaceUnescaped("n", $"\"{GetFeast(ymd.Year, ymd.Month, ymd.Day)}\"");
+            }
             return fx;
         }
 

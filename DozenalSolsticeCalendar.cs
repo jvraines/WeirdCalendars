@@ -103,12 +103,9 @@ namespace WeirdCalendars {
             string mm = Dozenal(ld.Month).PadLeft(2, '0');
             string d = Dozenal(ld.Day);
             string dd = Dozenal(ld.Day).PadLeft(2, '0');
-            if ("dDfFUgG".Contains(fx.Format)) {
-                // fix up long and short date formats
-                fx.LongDatePattern = FixDigits(fx.LongDatePattern, yy, y, mm, m, dd, d);
-                fx.ShortDatePattern = FixDigits(fx.ShortDatePattern, yy, y, mm, m, dd, d);
-            }
-            else fx.Format = FixDigits(format, yy, y, mm, m, dd, d);
+            fx.LongDatePattern = FixDigits(fx.LongDatePattern, yy, y, mm, m, dd, d);
+            fx.ShortDatePattern = FixDigits(fx.ShortDatePattern, yy, y, mm, m, dd, d);
+            fx.Format = FixDigits(format, yy, y, mm, m, dd, d);
             return fx;
 
             string Dozenal (int n) {

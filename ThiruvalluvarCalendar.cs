@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace WeirdCalendars {
     public class ThiruvalluvarCalendar : FixedCalendar {
@@ -52,7 +53,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            fx.Format = format.ReplaceUnescaped("q", $"'{GetQuarter(time)}'");
+            if (format.FoundUnescaped("q")) fx.Format = format.ReplaceUnescaped("q", $"'{GetQuarter(time)}'");
             return fx;
         }
     }

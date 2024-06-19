@@ -101,7 +101,8 @@ namespace WeirdCalendars {
             string month = MonthName[ToLocalDate(time).Month - 1];
             fx.LongDatePattern = FixMonth(fx.LongDatePattern);
             fx.ShortDatePattern = FixMonth(fx.ShortDatePattern);
-            fx.Format = FixMonth(format).ReplaceUnescaped("l", $"\"{GetLongCount(time)}\"").ReplaceUnescaped("c", $"\"{GetCalendarRound(time)}\"");
+            if (format.FoundUnescaped("l")) fx.Format = FixMonth(format).ReplaceUnescaped("l", $"\"{GetLongCount(time)}\"");
+            if (format.FoundUnescaped("c")) fx.Format = fx.Format.ReplaceUnescaped("c", $"\"{GetCalendarRound(time)}\"");
             return fx;
 
             string FixMonth(string f) {

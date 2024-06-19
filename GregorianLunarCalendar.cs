@@ -105,9 +105,11 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            int e = Epact(ToLocalDate(time).Year);
-            string epact = e > -1 ? e.ToString() : "25*";
-            fx.Format = fx.Format.ReplaceUnescaped("e", epact);
+            if (format.FoundUnescaped("e")) {
+                int e = Epact(ToLocalDate(time).Year);
+                string epact = e > -1 ? e.ToString() : "25*";
+                fx.Format = fx.Format.ReplaceUnescaped("e", epact);
+            }
             return fx;
         }
     }

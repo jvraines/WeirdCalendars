@@ -32,7 +32,10 @@ namespace WeirdCalendars {
         public override DateTime MaxSupportedDateTime => IsRevised ? DateTime.MaxValue : VSOPLimit; //bound for equinox accuracy
         public override DateTime MinSupportedDateTime => new DateTime(1792, 9, 22);
 
-        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("n", "Rural day name"), ("x", "Year in Roman numerals") };
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> {
+            ("n", "Rural day name"),
+            ("x", "Year in Roman numerals")
+        };
 
         public enum DayOfWeekWC {
             Blank = -1,

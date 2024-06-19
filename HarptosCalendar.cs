@@ -121,12 +121,9 @@ namespace WeirdCalendars {
             }
             fx.Format = format.ReplaceUnescaped("n", $"'{GetFestival(time)}'");
             string hour = $"'{GetTime(time)}'";
-            if ("fFUgGtT".Contains(fx.Format)) {
-                // fix up long and short time formats
-                fx.LongTimePattern = hour;
-                fx.ShortTimePattern = hour;
-            }
-            else fx.Format = FixTimeFormat(fx.Format);
+            fx.LongTimePattern = hour;
+            fx.ShortTimePattern = hour;
+            fx.Format = FixTimeFormat(fx.Format);
             return fx;
 
             string FixTimeFormat(string f) {

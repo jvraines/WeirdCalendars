@@ -100,7 +100,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);
-            if (format.Contains("c") || format.Contains("e")) {
+            if (format.FoundUnescaped("c") || format.FoundUnescaped("e")) {
                 var ymd = ToLocalDate(time);
                 fx.Format = format.ReplaceUnescaped("c", $"\"{GetCommemoration(ymd.Month, ymd.Day)}\"").ReplaceUnescaped("e", $"\"{GetTheme(ymd.Month)}\"");
             }

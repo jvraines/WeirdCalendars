@@ -12,6 +12,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 3, 20);
         protected override int SyncOffset => 0;
 
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
+
         protected override int FirstMonth => 0;
         
         protected override int GetFirstDayOfMonth(int year, int month) {

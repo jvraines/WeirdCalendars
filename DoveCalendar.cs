@@ -38,8 +38,8 @@ namespace WeirdCalendars {
                 fx.MonthFullName = month;
                 fx.MonthShortName = month;
             }
-            if ("DfF".Contains(format)) fx.LongDatePattern = $"dddd, '{month}{day}', yyyy";
-            if ("dgG".Contains(format)) fx.ShortDatePattern = $"'{month}{day}'/yyyy";
+            fx.LongDatePattern = $"dddd, '{month}{day}', yyyy";
+            fx.ShortDatePattern = $"'{month}{day}'/yyyy";
             fx.Format = FixDigits(format, null, null, month, month, day, day);
             return fx;
         }
