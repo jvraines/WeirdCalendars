@@ -78,7 +78,7 @@ namespace WeirdCalendars {
             return ly;
         }
         public override bool IsIntercalaryDay(int year, int month, int day) {
-            ValidateDateParams(year, month, day);
+            ValidateDateParams(year, month, day, 0);
             return day == 0 || day > 45;
         }
 

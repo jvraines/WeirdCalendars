@@ -52,7 +52,7 @@ namespace WeirdCalendars {
         }
 
         public override bool IsIntercalaryDay(int year, int month, int day) {
-            ValidateDateParams(year, month, day);
+            ValidateDateParams(year, month, day, 0);
             return month == 5;
         }
 

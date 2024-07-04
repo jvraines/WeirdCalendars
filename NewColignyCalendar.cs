@@ -6,11 +6,12 @@ namespace WeirdCalendars {
 
         public override string Author => "Timey";
         public override Uri Reference => new Uri("https://time-meddler.co.uk/the-coligny-calendar/");
-        // Author appears to have incorrect date on this web page (off by -1).
 
-        protected override DateTime SyncDate => new DateTime(2023, 11, 12);
+        // "I decided to begin the modern epoch of this conjectural calendar on 9th October 1999."
+        // However, the author's Javascript calculation puts the epoch at October 10.
+        protected override DateTime SyncDate => new DateTime(2023, 11, 13);
         protected override int SyncOffset => -1998;
-        public override DateTime MinSupportedDateTime => new DateTime(1999, 10, 9);
+        public override DateTime MinSupportedDateTime => new DateTime(1999, 10, 10);
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era); 

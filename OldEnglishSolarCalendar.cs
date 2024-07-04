@@ -9,8 +9,25 @@ namespace WeirdCalendars {
         public override string Author => "Timey";
         public override Uri Reference => new Uri("https://time-meddler.co.uk/the-old-english-solar-calendar/");
 
+        private bool isRevised;
+        public bool IsRevised {
+            get => isRevised;
+            private set {
+                isRevised = value;
+                Notes = isRevised ? "Revised version." : "Traditional version.";
+            }
+        }
+
+        public OldEnglishSolarCalendar(bool revised) {
+            IsRevised = revised;
+        }
+
+        public OldEnglishSolarCalendar() {
+            IsRevised = true;
+        }
+
         protected override DateTime SyncDate => new DateTime(2023, 12, 22);
-        protected override int SyncOffset => -443;
+        protected override int SyncOffset => -439;
 
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
@@ -22,14 +39,14 @@ namespace WeirdCalendars {
             ValidateDateParams(year, month, era);
             switch (month) {
                 case 1:
-                case 2:
                 case 10:
                 case 11:
                 case 12:
                     return 30;
-                // Month of leap day was 2 in previous version.
+                case 2:
+                    return IsRevised || IsLeapYear(year) ? 30 : 29;
                 case 3:
-                    return IsLeapYear(year) ? 30 : 29;
+                    return !IsRevised || IsLeapYear(year) ? 30 : 29;
                 default:
                     return 31;
             }
@@ -40,10 +57,26 @@ namespace WeirdCalendars {
             return month == 2 && day == 30;
         }
 
-        // Author now follows Gregorian leap years.
+        private static Dictionary<int, bool> LeapYears = new Dictionary<int, bool>();
+
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            return base.IsLeapYear(year + 444, 0);
+            int gYear = year - SyncOffset;
+            if (IsRevised) {
+                return base.IsLeapYear(gYear + 1, 0);
+            }
+            else { 
+                if (!LeapYears.TryGetValue(year, out bool leap)) {
+                    double[] start = new double[2];
+                    for (int i = 0; i < 2; i++) {
+                        double solstice = Earth.SeasonStart(gYear, Earth.Season.December);
+                        start[i] = Math.Round(solstice + 0.5);
+                    }
+                    leap = start[1] - start[0] > 365;
+                    LeapYears.Add(year, leap);
+                }
+                return leap;
+            }        
         }
 
         private static Dictionary<int, (int, int, int, int)> Movables = new Dictionary<int, (int, int, int, int)>();
@@ -103,7 +136,7 @@ namespace WeirdCalendars {
         }
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
-            SetNames(dtfi, new string[] { "Aeftergiuli", "Solmonath", "Hrethmonath", "Eostremonath", "Thrimilchi", "Aerlitha", "Aefterlitha", "Weodmonath", "Halegmonath", "Winterfylleth", "Blotmonath", "Aergiuli", "" }, new string[] { "Afg", "Sol", "Hre", "Eos", "Thr", "Arl", "Afl", "Weo", "Hal", "Win", "Blo", "Arg", ""}, new string[] { "Sunnandæg", "Monandæg", "Tiwesdæg", "Wodnesdæg", "Þunresdæg", "Frigedæg", "Sæternesdæg" });
+            SetNames(dtfi, new string[] { "Æftergiuli", "Solmonað", "Hreþmonað", "Eostremonað", "Ðrimilchi", "Ærliþa", "Æfterliþa", "Weodmonað", "Halegmonað", "Winterfylleð", "Blotmonað", "Ærgiuli", "" }, new string[] { "Afg", "Sol", "Hre", "Eos", "Dri", "Arl", "Afl", "Weo", "Hal", "Win", "Blo", "Arg", ""}, new string[] { "Sunnandæg", "Monandæg", "Tiwesdæg", "Wodnesdæg", "Þunresdæg", "Frigedæg", "Sæternesdæg" });
         }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {

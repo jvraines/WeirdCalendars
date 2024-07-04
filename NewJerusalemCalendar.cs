@@ -17,7 +17,7 @@ namespace WeirdCalendars {
         protected override int FirstMonth => 0;
         
         protected override int GetFirstDayOfMonth(int year, int month) {
-            ValidateDateParams(year, month);
+            ValidateDateParams(year, month, 0);
             return month > 0 ? 1 : 0;
         }
 

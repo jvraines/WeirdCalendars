@@ -29,6 +29,7 @@ namespace WeirdCalendars {
         }
 
         public string GetMonthIngredient(int year, int month) {
+            ValidateDateParams(year, month, 0);
             if (month > 9 && StartsWithSplitWeek(year + 1)) {
                 return month == 11 ? "Jalapeño" : "Tomato";
             }

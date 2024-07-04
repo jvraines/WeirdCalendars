@@ -152,6 +152,8 @@ namespace WeirdCalendars {
             return ToLocalDate(time).Year;
         }
 
+        protected virtual int GetRealDayOfYear(DateTime time) => GetDayOfYear(time);
+
         public override int GetDayOfYear(DateTime time) {
             ValidateDateTime(time);
             var ymd = ToLocalDate(time);

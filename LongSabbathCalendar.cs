@@ -38,7 +38,7 @@ namespace WeirdCalendars {
         }
 
         protected int GetHoursInDay(int year, int month, int day) {
-            ValidateDateParams(year, month, day);
+            ValidateDateParams(year, month, day, 0);
             return month == 12 && day == 30 || month == 1 && day == 1 || month == 2 && IsLeapYear(year) && (day == 25 || day == 26) ? 36 : 24;
         }
 

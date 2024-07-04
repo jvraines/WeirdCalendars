@@ -3,6 +3,7 @@
 namespace WeirdCalendars {
     public abstract class CoalescedWeekendCalendar : WeirdCalendar {
 
+        // 0 = Monday
         protected abstract int StartDay(int year);
         protected abstract int StartDay(int year, int month);
 

@@ -27,7 +27,7 @@ namespace WeirdCalendars {
         }
 
         public override bool IsIntercalaryDay(int year, int month, int day) {
-            ValidateDateParams(year, month, day);
+            ValidateDateParams(year, month, day, 0);
             if (IsMonth30(year, month)) {
                 switch (day) {
                     case 8:
