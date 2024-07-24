@@ -73,7 +73,7 @@ namespace WeirdCalendars {
             return result;
         }
 
-        private static string[] MonthNames = new string[] { "Offle Prime", "February Prime", "March Prime", "April Prime", "May Prime", "June Prime", "Grune Prime", "August Prime", "Spune Prime", "Sektober Prime", "Ember Prime", "December Prime", "Ick Prime", "Offle Secundus", "February Secundus", "March Secundus", "April Secundus", "May Secundus", "June Secundus", "Grune Secundus", "August Secundus", "Spune Secundus", "Sektober Secundus", "Ember Secundus", "December Secundus", "Ick Secundus" };
+        private static string[] MonthNames = { "Offle Prime", "February Prime", "March Prime", "April Prime", "May Prime", "June Prime", "Grune Prime", "August Prime", "Spune Prime", "Sektober Prime", "Ember Prime", "December Prime", "Ick Prime", "Offle Secundus", "February Secundus", "March Secundus", "April Secundus", "May Secundus", "June Secundus", "Grune Secundus", "August Secundus", "Spune Secundus", "Sektober Secundus", "Ember Secundus", "December Secundus", "Ick Secundus" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             SetNames(dtfi, MonthNames.Take(13).ToArray());

@@ -76,7 +76,7 @@ namespace WeirdCalendars {
             SetNames(dtfi, null, null, new string[] { "Arcturus", "Betelgeuse", "Canopus", "Deneb", "Elnath", "Fomalhaut", "Sirius" });
         }
 
-        private static string[] YearName = new string[] { "Mouse", "Cow", "Leopard", "Hare", "Wolf", "Snake", "Horse", "Sheep", "Monkey", "Hen", "Dog", "Boar" };
+        private static string[] YearName = { "Mouse", "Cow", "Leopard", "Hare", "Wolf", "Snake", "Horse", "Sheep", "Monkey", "Hen", "Dog", "Boar" };
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);

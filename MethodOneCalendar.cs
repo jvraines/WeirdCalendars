@@ -99,7 +99,7 @@ namespace WeirdCalendars {
             SetNames(dtfi, m, ma);
         }
 
-        private static string[] CycleCode = new string[] { "R", "L", "W", "S"};
+        private static string[] CycleCode = { "R", "L", "W", "S"};
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);

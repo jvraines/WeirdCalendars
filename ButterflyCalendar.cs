@@ -41,7 +41,7 @@ namespace WeirdCalendars {
         }
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
-            dtfi.FirstDayOfWeek = DayOfWeek.Monday;
+            base.CustomizeDTFI(dtfi);
             SetNames(dtfi, new string[] { "Januar", "Februar", "Mar", "Pupar", "Tersar", "Junar", "Quintar", "Sixar", "Septar", "Octar", "Novar", "Neccar", "Farfar" });
         }
     }

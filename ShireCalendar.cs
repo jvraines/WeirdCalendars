@@ -109,7 +109,7 @@ namespace WeirdCalendars {
             SetNames(dtfi, new string[] { "Afteryule", "Solmath", "Rethe", "Astron", "Thrimidge", "Forelithe", "Afterlithe", "Wedmath", "Halimath", "Winterfilth", "Blotmath", "Foreyule", "" }, null, new string[] { "Sterday", "Sunday", "Monday", "Trewsday", "Hevensday", "Mersday", "Highday" });
         }
 
-        private static string[] BreeMonth = new string[] { "Frery", "Solmath", "Rethe", "Chithing", "Thrimidge", "Lithe", "Mede", "Wedmath", "Harvestmath", "Wintring", "Blooting", "Yulemath" };
+        private static string[] BreeMonth = { "Frery", "Solmath", "Rethe", "Chithing", "Thrimidge", "Lithe", "Mede", "Wedmath", "Harvestmath", "Wintring", "Blooting", "Yulemath" };
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);

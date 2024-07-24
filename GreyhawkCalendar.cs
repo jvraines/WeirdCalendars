@@ -35,8 +35,8 @@ namespace WeirdCalendars {
             SetNames(dtfi, new string[] { "Needfest", "Fireseek", "Readying", "Coldeven", "Growfest", "Planting", "Flocktime", "Wealsun", "Richfest", "Reaping", "Goodmonth", "Harvester", "Brewfest" }, new string[] { "Nee", "Fir", "Rdy", "Col", "Gro", "Pla", "Flo", "Wea", "Ric", "Rpg", "Goo", "Har", "Bre" }, new string[] { "Starday", "Sunday", "Moonday", "Godsday", "Waterday", "Earthday", "Freeday" });
         }
 
-        private static string[] ExtraMonths = new string[] { "Patchwall", "Ready'reat", "Sunsebb" };
-        private static string[] ExtraMonthsAbbr = new string[] { "Pat", "Rrt", "Sun" };
+        private static string[] ExtraMonths = { "Patchwall", "Ready'reat", "Sunsebb" };
+        private static string[] ExtraMonthsAbbr = { "Pat", "Rrt", "Sun" };
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);

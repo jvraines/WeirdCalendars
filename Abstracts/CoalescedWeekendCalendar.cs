@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace WeirdCalendars {
     public abstract class CoalescedWeekendCalendar : WeirdCalendar {
@@ -22,6 +23,10 @@ namespace WeirdCalendars {
         public override DateTime ToDateTime(int year, int month, int date, int hour, int minute, int second, int millisecond, int era) {
             DateTime d = base.ToDateTime(year, month, ToDay(year, month, date), hour, minute, second, millisecond, era);
             return date > 0 && GetDayOfWeek(d) == DayOfWeek.Sunday ? d.AddDays(-1) : d;
+        }
+
+        internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
+            dtfi.FirstDayOfWeek = DayOfWeek.Monday;
         }
     }
 }

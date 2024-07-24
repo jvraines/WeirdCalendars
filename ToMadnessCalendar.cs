@@ -53,7 +53,7 @@ namespace WeirdCalendars {
             return month == 20;
         }
 
-        private static string[] MonthName = new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Anguish", "Stasis", "Reprieve", "Delusion", "Demons", "Tatters", "Absurdum", "Insanity" };
+        private static string[] MonthName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "Anguish", "Stasis", "Reprieve", "Delusion", "Demons", "Tatters", "Absurdum", "Insanity" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             string[] m = MonthName.Take(13).ToArray();

@@ -58,7 +58,7 @@ namespace WeirdCalendars {
             SetNames(dtfi, m, ma, new string[] { "Coexistence", "Intention", "Sustenance", "Tenancy", "Intensity", "Attention", "Enlightenment" }, new string[] { "Coe", "Itn", "Sus", "Tcy", "Ity", "Att", "Enl"});
         }
 
-        private string[] XtraAbbrs = new string[] { "Tty", "Con", "Ten" };
+        private string[] XtraAbbrs = { "Tty", "Con", "Ten" };
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);

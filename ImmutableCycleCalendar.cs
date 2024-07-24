@@ -86,7 +86,7 @@ namespace WeirdCalendars {
             return IsInterlude(month) ? "" : day == 0 ? "Princeps" : "Extremas";
         }
 
-        private static string[] interlude = new string[] { "Hibernal", "Vernal", "Aestival", "Autumnal" };
+        private static string[] interlude = { "Hibernal", "Vernal", "Aestival", "Autumnal" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             SetNames(dtfi, new string[] { "Primihibernum", "Medihibernum", "Posthibernum", "Primivernum", "Medivernum", "Postvernum", "Primiaestus", "Mediaestus", "Postaestus", "Primiautumnus", "Mediautumnus", "Postautumnus", "" }, new string[] {"Phb", "Mhb", "Thb", "Pvr", "Mvr", "Tvr", "Pas", "Mas", "Tas", "Pat", "Mat", "Tat", "" }, new string[] { "Dies Solis", "Dies Lunae", "Dies Martis", "Dies Mercurii", "Dies Jovis", "Dies Veneris", "Dies Saturnii" }, new string[] { "Sol", "Lun", "Mar", "Mer", "Jov", "Ven", "Sat" });  

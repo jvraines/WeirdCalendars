@@ -40,7 +40,7 @@ namespace WeirdCalendars {
             return day == 28 && month == 24 && IsLeapYear(year);
         }
 
-        private static string[] MonthName = new string[] { "Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha", "Pisces", "Mina", "Aries", "Mesha", "Taurus", "Rishabha", "Gemini", "Mithuna", "Cancer", "Karka", "Leo", "Simha", "Virgo", "Kanya", "Libra", "Tula", "Scorpius", "Vrishika" };
+        private static string[] MonthName = { "Sagittarius", "Dhanus", "Capricornus", "Makara", "Aquarius", "Kumbha", "Pisces", "Mina", "Aries", "Mesha", "Taurus", "Rishabha", "Gemini", "Mithuna", "Cancer", "Karka", "Leo", "Simha", "Virgo", "Kanya", "Libra", "Tula", "Scorpius", "Vrishika" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             string[] m = new string[13];

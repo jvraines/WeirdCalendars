@@ -121,8 +121,8 @@ namespace WeirdCalendars {
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static string ToRoman(this int arabic) {
             if (arabic > 9999) throw new ArgumentOutOfRangeException();
-            int[] divisor = new int[] { 5000, 4000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-            string[] digit = new string[] { "V̅", "I̅V̅", "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+            int[] divisor = { 5000, 4000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+            string[] digit = { "V̅", "I̅V̅", "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
             string roman = "";
             int d = 0;
             while (arabic > 0) {

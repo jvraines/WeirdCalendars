@@ -147,9 +147,7 @@ namespace WeirdCalendars {
             SetNames(dtfi, new string[] { "Vendémiaire", "Brumaire", "Frimaire", "Nivôse", "Pluvôse", "Ventôse", "Germinal", "Floréal", "Prairial", "Messidor", "Thermidor", "Fructidor", "" }, null, new string[] { "primidi", "duodi", "tridi", "quartidi", "quintidi", "sextidi", "septidi" });
         }
 
-        private static string[] Festival = new string[] {
-            "Fête de la vertu", "Fête du génie", "Fête du travail", "Fête de l'opinion", "Fête des récompenses", "Fête de la révolution"
-        };
+        private static string[] Festival = { "Fête de la vertu", "Fête du génie", "Fête du travail", "Fête de l'opinion", "Fête des récompenses", "Fête de la révolution" };
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);

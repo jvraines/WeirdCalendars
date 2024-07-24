@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Compile Remove="Support\Lookup.cs" />
-    <Compile Remove="TesserodsCalendar.cs" />
     <Compile Remove="TraditionalChristianCalendar.cs" />
   </ItemGroup>
 

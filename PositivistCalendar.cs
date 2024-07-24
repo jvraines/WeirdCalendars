@@ -19,7 +19,7 @@ namespace WeirdCalendars {
             ("c", "Day commemoration")
         };
 
-        private static string[] MonthTheme = new string[] { "The early theocracy", "Ancient poets", "Ancient philosophy", "Ancient science", "Military civilization", "Catholicism", "Feudal civilization", "Modern epics", "Modern industry", "Modern drama", "Modern philosophy", "Modern politics", "Modern science" };
+        private static string[] MonthTheme = { "The early theocracy", "Ancient poets", "Ancient philosophy", "Ancient science", "Military civilization", "Catholicism", "Feudal civilization", "Modern epics", "Modern industry", "Modern drama", "Modern philosophy", "Modern politics", "Modern science" };
         public string GetTheme(int month) {
             if (month < 1 || month > 13) throw new ArgumentOutOfRangeException("month", "Month must be greater than 0 and less than 14.");
             return MonthTheme[month - 1];

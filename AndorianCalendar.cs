@@ -62,7 +62,7 @@ namespace WeirdCalendars {
 
         public int GetFesoanOrbit(DateTime time) => (int)Math.Ceiling(ToLocalDate(time).Year / 4.0);
         
-            private static string[] Moons = new string[] { "Firstmoon", "Secondmoon", "Thirdmoon", "Fourthmoon", "Fifthmoon", "Sixthmoon", "Seventhmoon", "Eighthmoon", "Ninthmoon", "Tenthmoon", "Eleventhmoon", "Twelfthmoon", "Thirteenthmoon", "Fourteenthmoon", "Fifteenthmoon", "Sixteenthmoon", "Seventeenthmoon", "Eighteenthmoon" };
+         private static string[] Moons = { "Firstmoon", "Secondmoon", "Thirdmoon", "Fourthmoon", "Fifthmoon", "Sixthmoon", "Seventhmoon", "Eighthmoon", "Ninthmoon", "Tenthmoon", "Eleventhmoon", "Twelfthmoon", "Thirteenthmoon", "Fourteenthmoon", "Fifteenthmoon", "Sixteenthmoon", "Seventeenthmoon", "Eighteenthmoon" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             string[] ma = new string[13];

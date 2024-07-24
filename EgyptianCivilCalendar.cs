@@ -40,7 +40,7 @@ namespace WeirdCalendars {
         public int GetDecanNumber(DateTime time) => (GetDayOfYear(time) - 1) / 10 + 1;
 
         // Names from https://www.occult.live/index.php/Egyptian_decans. Placing Sirius at 1 Thoth.
-        private static string[] DecanDeity = new string[] { "Sopdet", "Tepy-a Kenmet", "Kenmet", "Khery Heped En Kenmet", "Hat Djat", "Pehuy Djat", "Temat Heret", "Temat Kheret", "Weshati Bekati", "Ip-Djes", "Tepy-a Khentet", "Khentet heret", "Khentet kheret", "Tjemes en Khentet", "Qedty", "Hery-ib Wia", "Seshmu", "Kenmu", "Tepy-a Semed", "Semed", "Seret", "Sawy Seret", "Khery Heped Seret", "Tepy-a Akhuy", "Akhuy", "Bawy", "Khentu Heru", "Khentu Kheru", "Qed", "Sawy Qed", "Khau", "Aryt", "Remen Hery Sah", "Remen Khery Sah", "Sah", "Tepy-a Sopdet", "Shetwy" };
+        private static string[] DecanDeity = { "Sopdet", "Tepy-a Kenmet", "Kenmet", "Khery Heped En Kenmet", "Hat Djat", "Pehuy Djat", "Temat Heret", "Temat Kheret", "Weshati Bekati", "Ip-Djes", "Tepy-a Khentet", "Khentet heret", "Khentet kheret", "Tjemes en Khentet", "Qedty", "Hery-ib Wia", "Seshmu", "Kenmu", "Tepy-a Semed", "Semed", "Seret", "Sawy Seret", "Khery Heped Seret", "Tepy-a Akhuy", "Akhuy", "Bawy", "Khentu Heru", "Khentu Kheru", "Qed", "Sawy Qed", "Khau", "Aryt", "Remen Hery Sah", "Remen Khery Sah", "Sah", "Tepy-a Sopdet", "Shetwy" };
 
         // Deities are tied to rising asterisms subject to the Sothic Cycle
         public string GetDecanDeity(DateTime time) {

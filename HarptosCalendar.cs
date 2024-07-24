@@ -34,7 +34,7 @@ namespace WeirdCalendars {
         }
 
         private static Dictionary<int, DateTime[]> AstroTimes = new Dictionary<int, DateTime[]>();
-        private static string[] Hours = new string[] { "Midnight", "Moondark", "Nightsend", "Dawn", "Morning", "Highsun", "Afternoon", "Dusk", "Sunset", "Evening", "Midnight" };
+        private static string[] Hours = { "Midnight", "Moondark", "Nightsend", "Dawn", "Morning", "Highsun", "Afternoon", "Dusk", "Sunset", "Evening", "Midnight" };
         
         public string GetTime(DateTime time) {
             ValidateDateTime(time);

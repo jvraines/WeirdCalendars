@@ -39,7 +39,7 @@ namespace WeirdCalendars {
             return (DayOfWeek)(GetDayOfMonth(time) % 7);
         }
 
-        private static string[] ExtMonths = new string[] { "November", "December", "Christmas" };
+        private static string[] ExtMonths = { "November", "December", "Christmas" };
 
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             SetNames(dtfi, new string[] { "January", "February", "March", "Easter", "April", "May", "June", "Community", "July", "August", "September", "Thanksgiving", "October" });

@@ -17,7 +17,7 @@ namespace WeirdCalendars {
         private TimeSpan partialBoundary = TimeSpan.FromHours(10 * HourFactor);   //Time after which to add 1 day to a partial day.
 
         private static Dictionary<int, (int, int[])> YearPlot = new Dictionary<int, (int, int[])>();
-        private static int[] MonthHours = new int[] { 850, 770, 850, 820, 850, 820, 850, 850, 820, 850, 820, 850 };
+        private static int[] MonthHours = { 850, 770, 850, 820, 850, 820, 850, 850, 820, 850, 820, 850 };
 
         private (int Days, int[] Month) GetYearPlot(int year) {
             if (!YearPlot.TryGetValue(year, out var p)) {

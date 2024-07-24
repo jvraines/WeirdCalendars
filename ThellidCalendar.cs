@@ -52,7 +52,7 @@ namespace WeirdCalendars {
             return IsLeapYear(year) && month == 14 ? "Leap Day" : "Old Year's Day";
         }
 
-        private static string[] MonthName = new string[] { "Alvakku", "Bethanis", "Duvadda", "Emovvi", "Forkithal", "Kalvazzi", "Irentos", "Jukennuk", "Miskullen", "Ossakov", "Raikkaved", "Underro", "Zithebbe", "Werrimul", "Nabbakan" };
+        private static string[] MonthName = { "Alvakku", "Bethanis", "Duvadda", "Emovvi", "Forkithal", "Kalvazzi", "Irentos", "Jukennuk", "Miskullen", "Ossakov", "Raikkaved", "Underro", "Zithebbe", "Werrimul", "Nabbakan" };
         
         internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             SetNames(dtfi, MonthName.Take(13).ToArray(), null, new string[] { "Pasku", "Lokkan", "Gunji", "Hithed", "Shevro", "Teijal", "Vaira" });

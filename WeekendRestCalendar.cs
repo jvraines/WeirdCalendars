@@ -47,9 +47,5 @@ namespace WeirdCalendars {
             ValidateDateParams(year, month, ToDay(year, month, date), era);
             return date == 28;
         }
-
-        internal override void CustomizeDTFI(DateTimeFormatInfo dtfi) {
-            dtfi.FirstDayOfWeek = DayOfWeek.Monday;
-        }
     }
 }
