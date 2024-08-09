@@ -33,9 +33,9 @@ namespace WeirdCalendars {
         private (DateTime date, int offset) SyncGregorian = (new DateTime(2022, 3, 24), 0);
 
         /// <summary>
-        /// Construct with the default value of IsAnaleptic = True.
+        /// Construct with the default value of IsAnaleptic = False.
         /// </summary>
-        public ImladrisCalendar() :this(true) { }
+        public ImladrisCalendar() :this(false) { }
 
         /// <summary>
         /// Construct with a specified analepticity.

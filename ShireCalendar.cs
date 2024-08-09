@@ -31,9 +31,9 @@ namespace WeirdCalendars {
         private (DateTime date, int offset) SyncGregorian = (new DateTime(2022, 12, 21), 0);
         
         /// <summary>
-        /// Construct with the default value of IsAnaleptic = True                                   
+        /// Construct with the default value of IsAnaleptic = False                                   
         /// </summary>
-        public ShireCalendar() : this(true) { }
+        public ShireCalendar() : this(false) { }
 
         /// <summary>
         /// Construct with a specified analepticity.
@@ -85,7 +85,7 @@ namespace WeirdCalendars {
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
             if (IsAnaleptic) return year % 4 == 0 && year % 100 != 0;
-            return base.IsLeapYear(year, era);
+            return base.IsLeapYear(year + 1, era);
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {

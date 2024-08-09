@@ -18,6 +18,8 @@ namespace WeirdCalendars {
             ("n", "Festival")
         };
 
+        public override string SpecialDay(DateTime time) => GetFestival(time);
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
             switch (month) {

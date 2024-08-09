@@ -32,8 +32,7 @@ namespace WeirdCalendars {
             }
             return start;
         }
-
-        private static string futhark = "ᚠᚢᚦᚬᚱᚴᚼᚾᛁᛅᛋᛏᛒᛚᛘᛦᛮᛯᛰ";
+        private static string[] futhark = { "ᚠ fé", "ᚢ úr", "ᚦ thurs", "ᚬ as", "ᚱ reið", "ᚴ kaun", "ᚼ hagall", "ᚾ nauðr", "ᛁ ísa", "ᛅ ár", "ᛋ sól", "ᛏ týr", "ᛒ björk", "ᛚ maðr", "ᛘ lögr", "ᛦ yr", "ᛮ árlaug", "ᛯ tvimaður", "ᛰ belgþor" };
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
@@ -44,10 +43,11 @@ namespace WeirdCalendars {
                 y--;
             }
             while (yearStart > time);
-            fx.Format = futhark.Substring((int)(time - yearStart).TotalDays % 7, 1);
+            fx.Format = futhark[(int)(time - yearStart).TotalDays % 7];
             double jd = time.Date.JulianDay();
             double fm = Moon.NextPhase(Moon.Phase.FullMoon, jd);
-            if (fm - jd < 1) fx.Format += $" | {futhark.Substring(GoldenNumber(time.Year) - 1, 1)}";
+            if (fm - jd < 1) fx.Format += $" | moon {futhark[GoldenNumber(time.Year) - 1]}";
+            fx.Format = $"'{fx.Format}'";
             return fx;
         }
     }

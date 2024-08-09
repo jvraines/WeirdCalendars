@@ -20,6 +20,8 @@ namespace WeirdCalendars {
             ("j", "Jubilee date")
         };
 
+        public override string SpecialDay(DateTime time) => GetHolyDay(time);
+
         public override int GetMonthsInYear(int year, int era) {
             // Wheel graphic shows leap week as part of Month 12, but online calendar displays it as separate month with enumerated days.
             ValidateDateParams(year, era);

@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Collections.Generic;
 
 namespace WeirdCalendars {
+
     public abstract class WeirdCalendar : Calendar {
 
         /// <summary>
@@ -51,6 +52,9 @@ namespace WeirdCalendars {
         }
 
         protected readonly string NoSpecialDay = "(none)";
+
+        public virtual string SpecialDay(int year, int month, int day) => NoSpecialDay;
+        public virtual string SpecialDay(DateTime time) => NoSpecialDay;
 
         protected InvalidOperationException BadWeekday = new InvalidOperationException ("Date cannot be represented as DayOfWeek. Use GetDayOfWeekWC() or ToStringWC() instead.");
 

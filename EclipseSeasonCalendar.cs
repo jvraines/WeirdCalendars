@@ -15,11 +15,8 @@ namespace WeirdCalendars {
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
             ("e", "Eclipse type")
         };
-        /* Key:
-         * ☉︎ Solar ☽︎ Lunar
-         * ● Total ◐ Partial ◍ Penumbral
-         * ○ Annular ◙ Hybrid
-        */
+
+        public override string SpecialDay(DateTime time) => GetEclipse(time);
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);
@@ -59,15 +56,12 @@ namespace WeirdCalendars {
         private bool IsLongYear(int year) => year % 8 == 0 && (year % 192 != 0 || year % 3840 == 0);
 
         public string GetEclipse(DateTime time) {
-            const string moon = "☽︎";
-            const string sun = "☉︎";
-            const string type = "●◐◍○◙";
             double jd = time.Date.JulianEphemerisDay();
             var m = Moon.NextEclipse(jd);
-            if (m.greatestEclipse < jd + 1) return $"{moon}{type.Substring((int)m.type, 1)}";
+            if (m.greatestEclipse < jd + 1) return $"{m.type} lunar eclipse";
             else {
                 var s = Sun.NextEclipse(jd);
-                if (s.greatestEclipse < jd + 1) return $"{sun}{type.Substring((int)s.type, 1)}";
+                if (s.greatestEclipse < jd + 1) return $"{s.type} solar eclipse";
             }
             return NoSpecialDay;
         }
@@ -78,7 +72,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            if (format.FoundUnescaped("e")) fx.Format = format.ReplaceUnescaped("e", GetEclipse(time));
+            if (format.FoundUnescaped("e")) fx.Format = format.ReplaceUnescaped("e", $"'{GetEclipse(time)}'");
             return fx;
         }
     }

@@ -15,6 +15,8 @@ namespace WeirdCalendars {
             ("n", "Holy day")
         };
 
+        public override string SpecialDay(int year, int month, int day) => GetHolyDay(year, month, day);
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
             return month == 12 && IsLeapYear(year) ? 37 : month % 3 == 1 ? 31 : 30;

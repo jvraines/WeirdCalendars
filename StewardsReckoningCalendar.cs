@@ -8,7 +8,7 @@ namespace WeirdCalendars {
         /// <summary>
         /// False (default) to synchronize with the Gregorian calendar or True to project analeptically.
         /// </summary>
-        public StewardsReckoningCalendar() : this(true) { }
+        public StewardsReckoningCalendar() : this(false) { }
 
         /// <summary>
         /// Construct with a specified analepticity.
@@ -52,7 +52,7 @@ namespace WeirdCalendars {
                 ValidateDateParams(year, era);
                 return year % 4 == 0 && year % 100 != 0 && year != 2360;
             }
-            return base.IsLeapYear(year, era);
+            return base.IsLeapYear(year + 1, era);
         }
 
         /// <summary>

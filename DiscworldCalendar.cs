@@ -18,6 +18,8 @@ namespace WeirdCalendars {
             ("n", "Special day")
         };
 
+        public override string SpecialDay(int year, int month, int day) => GetSpecialDay(month, day);
+
         protected override int DaysInWeek => 8;
 
         public enum DayOfWeekWC {

@@ -13,6 +13,8 @@ namespace WeirdCalendars {
         protected override int SyncOffset => -1998;
         public override DateTime MinSupportedDateTime => new DateTime(1999, 10, 10);
 
+        public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era); 
             int c = CycleYear(year);

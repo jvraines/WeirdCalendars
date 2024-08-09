@@ -9,7 +9,7 @@ namespace WeirdCalendars {
         /// <summary>
         /// False (default) to synchronize with the Gregorian calendar or True to project analeptically.
         /// </summary>
-        public KingsReckoningCalendar() : this(true) { }
+        public KingsReckoningCalendar() : this(false) { }
 
         /// <summary>
         /// Construct with a specified analepticity.
@@ -60,7 +60,7 @@ namespace WeirdCalendars {
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(FixupYear(year), era);
             if (IsAnaleptic) return year % 4 == 0 && year % 100 != 0;
-            return base.IsLeapYear(year, era);
+            return base.IsLeapYear(year + 1, era);
         }
 
         /// <summary>

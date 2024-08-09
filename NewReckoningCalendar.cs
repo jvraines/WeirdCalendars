@@ -8,7 +8,7 @@ namespace WeirdCalendars {
         /// <summary>
         /// False (default) to synchronize with the Gregorian calendar or True to project analeptically.
         /// </summary>
-        public NewReckoningCalendar() : this(true) { }
+        public NewReckoningCalendar() : this(false) { }
 
         /// <summary>
         /// Construct with a specified analepticity.
