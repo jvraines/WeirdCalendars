@@ -16,7 +16,7 @@ namespace WeirdCalendars {
         /// <param name="analeptic">False to synchronize with the Gregorian calendar or True to project analeptically.</param>
         public StewardsReckoningCalendar(bool analeptic) {
             SyncAnalepetic = (new DateTime(2020, 12, 19), 7027);
-            SyncGregorian = (new DateTime(2022, 12, 21), 0);
+            SyncGregorian = (new DateTime(2022, 12, 21), 1);
             IsAnaleptic = analeptic;
             Title = "Steward's Reckoning Calendar";
         }
@@ -52,7 +52,7 @@ namespace WeirdCalendars {
                 ValidateDateParams(year, era);
                 return year % 4 == 0 && year % 100 != 0 && year != 2360;
             }
-            return base.IsLeapYear(year + 1, era);
+            return base.IsLeapYear(year, era);
         }
 
         /// <summary>

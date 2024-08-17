@@ -28,7 +28,7 @@ namespace WeirdCalendars {
 
         // Following the default rules of Paul Sarando at
         //https://psarando.github.io/shire-reckoning/
-        private (DateTime date, int offset) SyncGregorian = (new DateTime(2022, 12, 21), 0);
+        private (DateTime date, int offset) SyncGregorian = (new DateTime(2022, 12, 21), 1);
         
         /// <summary>
         /// Construct with the default value of IsAnaleptic = False                                   
@@ -85,7 +85,7 @@ namespace WeirdCalendars {
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
             if (IsAnaleptic) return year % 4 == 0 && year % 100 != 0;
-            return base.IsLeapYear(year + 1, era);
+            return base.IsLeapYear(year, era);
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {

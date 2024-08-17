@@ -93,7 +93,7 @@ namespace WeirdCalendars {
             stone--;
             double weight = StoneData[stone, 0];
             double height = StoneData[stone, 1];
-            return weight == 0 && height == 0 ? "missing" : $"{(height == 0 ? "fallen" : $"height {height} m")}; above-ground weight {weight} t";
+            return weight == 0 && height == 0 ? "missing stone" : $"{(height == 0 ? "fallen" : $"height {height} m")}; above-ground weight {weight} t";
         }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
