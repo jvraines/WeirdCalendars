@@ -10,7 +10,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 26, 0, 57, 36);
         protected override int SyncOffset => 3945;
 
-        protected override int DaysInWeek => 0;
+        public override int DaysInWeek => 0;
 
         protected override double TimescaleFactor => 1.24;
 

@@ -23,7 +23,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 11501;
 
         protected override int FirstMonth => 0;
-        protected override int DaysInWeek => 10;
+        public override int DaysInWeek => 10;
 
         public override string Author => "Litmus A. Freeman";
         public override Uri Reference => new Uri("https://universalcelestialcalendar.com/Universal%20Community%20Calendar%20Wiki.backup.html");

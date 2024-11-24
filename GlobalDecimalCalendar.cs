@@ -14,7 +14,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => -2012;
         public override DateTime MinSupportedDateTime => new DateTime(2012, 3, 20);
         
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> { ("c", "Time in crons") };
 

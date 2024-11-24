@@ -21,7 +21,7 @@ namespace WeirdCalendars {
             Benduday
         }
 
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);

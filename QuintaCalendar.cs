@@ -13,7 +13,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => -1968;
 
         protected override int FirstMonth => 0;
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
             return (DayOfWeek)((GetDayOfYear(time) - 1) % DaysInWeek + 1);

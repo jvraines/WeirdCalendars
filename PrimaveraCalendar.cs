@@ -6,7 +6,7 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2020, 12, 22);
         protected override int SyncOffset => 1;
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override string Author => "Primavera D. Hornblower";
         public override Uri Reference => new Uri("http://bosonline.com/primavera/");

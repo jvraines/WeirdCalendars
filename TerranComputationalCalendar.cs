@@ -28,11 +28,6 @@ namespace WeirdCalendars {
             return month < 13 ? 28 : IsLeapYear(year) ? 2 : 1;
         }
 
-        public override int GetLeapMonth(int year, int era) {
-            ValidateDateParams(year, era);
-            return 13;
-        }
-
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
             return year % 4 == 0 && year % 128 != 0;
@@ -40,7 +35,7 @@ namespace WeirdCalendars {
 
         public override bool IsLeapDay(int year, int month, int day, int era) {
             ValidateDateParams(year, month, day, era);
-            return month == 13;
+            return month == 13 && day == 2;
         }
 
         protected override void ValidateDateParams(params int[] param) {

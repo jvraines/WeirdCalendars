@@ -20,7 +20,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => -2000;
         public override DateTime MinSupportedDateTime => new DateTime(2000, 3, 20);
 
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         public MessiahsCalendar() => Title = "Messiah's Calendar";
 

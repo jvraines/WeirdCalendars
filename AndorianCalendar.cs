@@ -9,19 +9,14 @@ namespace WeirdCalendars {
         public override string Author => "Christopher L. Bennett";
         public override Uri Reference => new Uri("https://christopherlbennett.wordpress.com/home-page/star-trek-fiction/dti-watching-the-clock/dti-calendar-notes/");
 
-        protected override DateTime SyncDate => new DateTime(2023, 11, 16, 20, 9, 35);
-        protected override int SyncOffset => -1701;
+        protected override DateTime SyncDate => new DateTime(2381, 9, 3);
+        protected override int SyncOffset => -1672;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
             ("n", "Fesoan orbit")
         };
 
-        public enum DayOfWeekWC {
-            First,
-            Second,
-            Penultimate,
-            Final
-        }
+        public override int DaysInWeek => 4;
 
         protected override double TimescaleFactor => 4.69;
 
@@ -42,8 +37,6 @@ namespace WeirdCalendars {
         private int WeekdayNumber(DateTime time) => (ToLocalDate(time).Day - 1) % 4;
 
         public override DayOfWeek GetDayOfWeek(DateTime time) => (DayOfWeek)WeekdayNumber(time);
-
-        public DayOfWeekWC GetDayOfWeekWC(DateTime time) => (DayOfWeekWC)WeekdayNumber(time);
 
         public override int GetDaysInYear(int year, int era) {
             ValidateDateParams(year, era);
@@ -72,6 +65,7 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
+            FixNegativeYears(fx, time);
             int month = ToLocalDate(time).Month;
             string hour = GetTime(time).ToString("0.000");
             fx.LongTimePattern = hour;

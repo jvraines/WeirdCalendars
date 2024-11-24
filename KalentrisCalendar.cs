@@ -14,7 +14,7 @@ namespace WeirdCalendars {
         public KalentrisCalendar() => Title = "Kalentris";
         public override string Notes => "Time in hours, comes, and ticks.";
 
-        protected override int DaysInWeek => 9;
+        public override int DaysInWeek => 9;
 
         public enum DayOfWeekWC {
             Oneday,

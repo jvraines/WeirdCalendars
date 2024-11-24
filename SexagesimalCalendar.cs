@@ -10,7 +10,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2020, 12, 21);
         protected override int SyncOffset => -2011;
         public override DateTime MinSupportedDateTime => new DateTime(2012, 12, 21);
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);

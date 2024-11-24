@@ -19,7 +19,7 @@ namespace WeirdCalendars {
             Quintidi
         }
 
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         public override bool IsIntercalaryDay(int year, int month, int day) {
             ValidateDateParams(year, month, day, 0);

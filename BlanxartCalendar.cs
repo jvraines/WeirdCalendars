@@ -19,7 +19,7 @@ namespace WeirdCalendars {
             Saturday
         }
 
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
             return (DayOfWeek)((GetDayOfMonth(time) - 1) % 6);

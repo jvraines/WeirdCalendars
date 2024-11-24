@@ -6,7 +6,7 @@ using System.Globalization;
 namespace WeirdCalendars {
     public class AztecCalendar : WeirdCalendar {
         
-        public override string Author => "Traditional";
+        public override string Author => "Traditional and Ruben Ochoa";
         public override Uri Reference => new Uri("http://www.calmecacanahuac.com/tlaahcicacaquiliztli/Ruben_Ochoa_Count");
 
         protected override DateTime SyncDate => new DateTime(2022, 3, 21); // Day Count 10-16, Trecena 6 according to source
@@ -14,8 +14,6 @@ namespace WeirdCalendars {
  
         // Maximum valid date for season calculation from AA.
         public override DateTime MaxSupportedDateTime => VSOPLimit;
-
-        public override string Notes => "Using the Ruben Ochoa Count.";
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
             ("n", "Trecena")

@@ -9,9 +9,12 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
 
-        protected override int MaxYearOffset => -8006;
-
         private DateTime baseDate = new DateTime(1993, 9, 1);
+
+        protected override void ValidateDateParams(params int[] param) {
+            if (param[0] != 1993) throw new ArgumentOutOfRangeException("year", $"Calendar year must always be 1993. Year {param[0]} was passed.");
+            base.ValidateDateParams(param);
+        }
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);

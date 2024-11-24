@@ -14,7 +14,7 @@ namespace WeirdCalendars {
             DayTwo
         }
 
-        protected override int DaysInWeek => 2;
+        public override int DaysInWeek => 2;
 
         public TwoHundred44MonthCalendar() => Title = "244 Month Calendar";
 

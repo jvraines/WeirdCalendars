@@ -10,7 +10,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
 
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         public new enum DayOfWeekWC {
             Blank = -1,

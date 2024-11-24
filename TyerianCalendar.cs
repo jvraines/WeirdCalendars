@@ -11,7 +11,7 @@ namespace WeirdCalendars {
         // Author's claimed epoch is 1300, but holiday correlations only work if sync happens in the year of authorship.
         protected override DateTime SyncDate => new DateTime(2015, 12, 21);
         protected override int SyncOffset => -1300;
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         protected override double TimescaleFactor => 1 / 0.9972685185;
 

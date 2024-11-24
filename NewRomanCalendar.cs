@@ -22,7 +22,7 @@ namespace WeirdCalendars {
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public NewRomanCalendar() => Title = "New Roman Lunisolar Calendar";
         

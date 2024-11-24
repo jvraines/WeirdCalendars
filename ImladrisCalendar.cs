@@ -45,7 +45,7 @@ namespace WeirdCalendars {
             IsAnaleptic = analeptic;
         }
 
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
             ("n", "Yén")

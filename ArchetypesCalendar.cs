@@ -24,6 +24,7 @@ namespace WeirdCalendars {
         public override Uri Reference => new Uri("https://www.hermetic.ch/cal_stud/arch_cal/arch_cal.htm");
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+        public override int DaysInWeek => 10;
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
             int d = WeekdayNumber(time);

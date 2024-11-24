@@ -14,7 +14,7 @@ namespace WeirdCalendars {
             ("i", "Stone data")
         };
 
-        protected override int DaysInWeek => 10;
+        public override int DaysInWeek => 10;
 
         public enum DayOfWeekWC {
             Stone1,

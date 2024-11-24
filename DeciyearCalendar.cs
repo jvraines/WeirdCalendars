@@ -23,7 +23,7 @@ namespace WeirdCalendars {
             Novday
         }
 
-        protected override int DaysInWeek => 9;
+        public override int DaysInWeek => 9;
         protected override int FirstMonth => 0;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("I", "\"ISO\" format") };

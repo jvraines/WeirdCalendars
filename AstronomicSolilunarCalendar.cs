@@ -34,9 +34,19 @@ namespace WeirdCalendars {
             return GetPlot(year).Moons[month - 1];
         }
 
+        public override int GetLeapMonth(int year, int era) {
+            ValidateDateParams(year, era);
+            return GetPlot(year).BlueMoon;
+        }
+
         public override bool IsLeapDay(int year, int month, int day, int era) {
             ValidateDateParams(year, month, day, era);
             return false;
+        }
+
+        public override bool IsLeapMonth(int year, int month, int era) {
+            ValidateDateParams(year, month, era);
+            return month == GetPlot(year).BlueMoon;
         }
 
         public override bool IsLeapYear(int year, int era) {

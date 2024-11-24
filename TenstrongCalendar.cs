@@ -23,7 +23,7 @@ namespace WeirdCalendars {
             Tenstrong
         }
 
-        protected override int DaysInWeek => 10;
+        public override int DaysInWeek => 10;
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
             int wd = WeekdayNumber(time);

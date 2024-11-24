@@ -13,7 +13,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
         public override DateTime MaxSupportedDateTime => VSOPLimit; // Limit of VSOP87 accuracy
 
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public SixDayWeekCalendar() => Title = "6-Day Week Solar Calendar";
 

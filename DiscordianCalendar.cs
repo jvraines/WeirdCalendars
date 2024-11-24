@@ -7,7 +7,7 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2020, 1, 1);
         protected override int SyncOffset => 1166;
-        protected override int DaysInWeek => 5;
+        public override int DaysInWeek => 5;
 
         public override string Author => "Malaclypse The Younger";
         public override Uri Reference => new Uri("https://www.principiadiscordia.com/book/41.php");

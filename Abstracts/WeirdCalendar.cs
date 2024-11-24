@@ -67,9 +67,6 @@ namespace WeirdCalendars {
         // Offset of year count from year of SyncDate
         protected abstract int SyncOffset { get; }
 
-        // Customizable max year offset
-        protected virtual int MaxYearOffset => SyncOffset;
-
         protected DateTime VSOPLimit = new DateTime(6000, 1, 1);
         
         /// <summary>
@@ -109,7 +106,7 @@ namespace WeirdCalendars {
         /// <summary>
         /// Number of days in one week. Zero if weeks are not used.
         /// </summary>
-        protected virtual int DaysInWeek => 7;
+        public virtual int DaysInWeek => 7;
 
         private static NotSupportedException NoWeeks = new NotSupportedException("There are no weeks or weekdays in this calendar.");
 
@@ -315,8 +312,15 @@ namespace WeirdCalendars {
             for (int p = 0; p < param.Length - 1; p++) {
                 switch (p) {
                     case 0:
-                        int minYear = MinSupportedDateTime.Year + SyncOffset;
-                        int maxYear = MaxSupportedDateTime.Year + MaxYearOffset;
+                        int minYear, maxYear;
+                        if (TimescaleFactor == 1) {
+                            minYear = MinSupportedDateTime.Year + SyncOffset;
+                            maxYear = MaxSupportedDateTime.Year + SyncOffset;
+                        }
+                        else {
+                            minYear = ToLocalDate(MinSupportedDateTime).Year;
+                            maxYear = ToLocalDate(MaxSupportedDateTime).Year;
+                        }
                         if (param[0] < minYear || param[0] > maxYear) oops = new ArgumentOutOfRangeException("year", $"Calendar year must be in the range {minYear} to {maxYear}. Year {param[0]} was passed.");
                         break;
                     case 1:

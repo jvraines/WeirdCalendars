@@ -12,7 +12,7 @@ namespace WeirdCalendars {
 
         protected override int FirstMonth => 0;
         protected override int GetFirstDayOfMonth(int year, int month) => 0;
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);

@@ -47,7 +47,7 @@ namespace WeirdCalendars {
             return p;
         }
 
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);

@@ -10,7 +10,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 1, 1);
         protected override int SyncOffset => 0;
 
-        protected override int DaysInWeek => 6;
+        public override int DaysInWeek => 6;
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
             int w = (GetDayOfMonth(time) - 1) % 6;

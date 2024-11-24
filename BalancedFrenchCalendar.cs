@@ -24,7 +24,7 @@ namespace WeirdCalendars {
             décadi
         }
 
-        protected override int DaysInWeek => 10;
+        public override int DaysInWeek => 10;
 
         protected override int GetFirstDayOfMonth(int year, int month) => month % 3 == 1 ? 0 : 1;
 
