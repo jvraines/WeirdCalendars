@@ -16,6 +16,16 @@ namespace WeirdCalendars {
         // Maximum valid date for season calculation from VSOP87.
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
+        public override int GetMonthsInYear(int year, int era) {
+            ValidateDateParams(year, era);
+            return 1;   //no months = 1 year-long month
+        }
+
+        public override int GetDaysInMonth(int year, int month, int era) {
+            ValidateDateParams(year, month, era);
+            return GetPlot(year).YearDays;
+        }
+
         public int GetBeeps(DateTime time) {
             ValidateDateTime(time);
             return ToLocalDate(time).Beeps;

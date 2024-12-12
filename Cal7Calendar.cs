@@ -14,7 +14,7 @@ namespace WeirdCalendars {
         public Cal7Calendar() => Title = "Cal7";
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
-            ("I", "\"ISO\" format")
+            ("c", "Compact format")
         };
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
@@ -48,11 +48,11 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            if (format.FoundUnescaped("I")) {
+            if (format.FoundUnescaped("c")) {
                 int day = ToLocalDate(time).Day;
                 int w = (day - 1) / 7 + 1;
                 int d = (day - 1) % 7 + 1;
-                fx.Format = format.ReplaceUnescaped("I", $"yyyy-M-{w}-{d}");
+                fx.Format = format.ReplaceUnescaped("c", $"yyyy-M-{w}-{d}");
             }
             return fx;
         }

@@ -71,6 +71,7 @@ namespace WeirdCalendars {
                 cal = (WeirdCalendar)dtfi.Calendar;
                 FormatWC FormatWC = cal.GetFormatWC(dtfi, time, format);
                 format = FormatWC.Format;
+                string concat = FormatWC.DateAndTimeSeparator;
                 switch (format) {
                     case "d":
                         format = FormatWC.ShortDatePattern;
@@ -79,17 +80,17 @@ namespace WeirdCalendars {
                         format = FormatWC.LongDatePattern;
                         break;
                     case "f":
-                        format = $"{FormatWC.LongDatePattern} {FormatWC.ShortTimePattern}";
+                        format = $"{FormatWC.LongDatePattern}{concat}{FormatWC.ShortTimePattern}";
                         break;
                     case "U":
                     case "F":
-                        format = $"{FormatWC.LongDatePattern} {FormatWC.LongTimePattern}";
+                        format = $"{FormatWC.LongDatePattern}{concat}{FormatWC.LongTimePattern}";
                         break;
                     case "g":
-                        format = $"{FormatWC.ShortDatePattern} {FormatWC.ShortTimePattern}";
+                        format = $"{FormatWC.ShortDatePattern}{concat}{FormatWC.ShortTimePattern}";
                         break;
                     case "G":
-                        format = $"{FormatWC.ShortDatePattern} {FormatWC.LongTimePattern}";
+                        format = $"{FormatWC.ShortDatePattern}{concat}{FormatWC.LongTimePattern}";
                         break;
                     case "R":
                     case "r":
@@ -199,13 +200,40 @@ namespace WeirdCalendars {
 
         public static string ToBase(this int value, int radix) {
             if (radix == 10) return value.ToString();
+            if (radix > 16) throw new ArgumentOutOfRangeException("radix", "Maximum value is 16.");
             string result = string.Empty;
+            int work = Math.Abs(value);
             do {
-                result = "0123456789ABCDEF"[value % radix] + result;
-                value /= radix;
+                result = "0123456789ABCDEF"[work % radix] + result;
+                work /= radix;
             }
-            while (value > 0);
-            return result;
+            while (work > 0);
+            return $"{(value < 0 ? "-" : "")}{result}";
+        }
+
+        public static string ToBase(this double value, int radix, int places) {
+            if (radix == 10) return value.ToString();
+            string wholePart = ToBase((int)value, radix);
+            string fracPart = string.Empty;
+            value = Math.Abs(value);
+            value -= (int)value;
+            int p = 0;
+            do {
+                value *= radix;
+                fracPart += "0123456789ABCDEF"[(int)value];
+                value -= (int)value;
+                p++;
+            }
+            while (p < places);
+            return $"{wholePart}.{fracPart}";
+        }
+
+        public static string Dozenal(this int n) {
+            return n.ToBase(12).Replace("A", "↊").Replace("B", "↋");
+        }
+
+        public static string Dozenal(this double n, int places) {
+            return n.ToBase(12, places).Replace("A", "↊").Replace("B", "↋");
         }
 
         public static double ToLastUTMidnight(this double jd, bool isDynamical = true) {

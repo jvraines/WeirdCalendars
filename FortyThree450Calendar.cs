@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace WeirdCalendars {
@@ -10,12 +11,16 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 12, 21);
         protected override int SyncOffset => -2011;
         // Months and days appear to be zero-based but the author's calendar displays
-        // 1-based years. Its months are also off by -1.
+        // 1-based years. Its months are also off by -1 and weekdays by +1.
 
         protected override int FirstMonth => 0;
         protected override int GetFirstDayOfMonth(int year, int month) => 0;
 
         public FortyThree450Calendar() => Title = "43/450 Calendar";
+
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
+            ("c", "Day color")
+        };
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);
@@ -27,11 +32,31 @@ namespace WeirdCalendars {
             return ((year - 1) * 13 + month) * 43 % 450 > 406 ? 29 : 28;
         }
 
+        private bool AccumulatorTriggered(int year) {
+            int accumStart = (year - 1) * 13 * 43 % 450;
+            return accumStart + 13 * 43 >= 900;
+        }
+
         public override int GetDaysInYear(int year, int era) {
             ValidateDateParams(year, era);
-            int accumStart = (year - 1) * 13 * 43 % 450;
-            int accumFinish = accumStart + 13 * 43;
-            return accumFinish < 900 ? 365 : 366;
+            return AccumulatorTriggered(year) ? 366 : 365;
+        }
+
+        public override bool IsLeapDay(int year, int month, int day, int era) {
+            ValidateDateParams(year, month, day, era);
+            return day == 29;
+        }
+
+        public override bool IsLeapYear(int year, int era) {
+            ValidateDateParams(year, era);
+            return AccumulatorTriggered(year);
+        }
+
+        public string GetDayColor(DateTime time) {
+            int cm = 255 - 6 * (time.Month - 1);
+            int cd = 255 - 3 * time.Day;
+            int cy = 255 - time.Year % 100;
+            return $"#{cm:X}{cd:X}{cy:X}";
         }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
@@ -48,6 +73,7 @@ namespace WeirdCalendars {
                 fx.ShortDatePattern = FixDigits(fx.ShortDatePattern, null, null, m2, m1, d2, d1);
                 fx.LongDatePattern = FixDigits(fx.LongDatePattern, null, null, m2, m1, d2, d1);
             }
+            fx.Format = fx.Format.ReplaceUnescaped("c", $"'{GetDayColor(time)}'");
             return fx;
         }
     }

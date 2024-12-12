@@ -19,8 +19,8 @@ namespace WeirdCalendars {
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
             ("n", "Year name"),
-            ("c", "Cycle number"),
-            ("I", "ISO-like format")
+            ("y", "Cycle number"),
+            ("c", "Compact format")
         };
 
         private static Dictionary<int, NomadPlot> Plots = new Dictionary<int, NomadPlot>();
@@ -87,7 +87,7 @@ namespace WeirdCalendars {
             int cycle = GetCycle(ymd.Year);
             string yearName = $"'{GetYearName(ymd.Year)}'";
             fx.ShortDatePattern = $"{cycle}-{yearName}-{ymd.Month}-{ymd.Day}";
-            fx.Format = format.ReplaceUnescaped("n", yearName).ReplaceUnescaped("c", cycle.ToString()).ReplaceUnescaped("I", $"{cycle}-{ymd.Year % 12}-{ymd.Month}-{ymd.Day}");
+            fx.Format = format.ReplaceUnescaped("n", yearName).ReplaceUnescaped("y", cycle.ToString()).ReplaceUnescaped("c", $"{cycle}-{ymd.Year % 12}-{ymd.Month}-{ymd.Day}");
             return fx;
         }
     }

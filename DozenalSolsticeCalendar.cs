@@ -93,24 +93,20 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = base.GetFormatWC(dtfi, time, format);
             const double triceTicks = TimeSpan.TicksPerDay / (12 * 12 * 12);
-            string t = $"'{Dozenal((int)(time.TimeOfDay.Ticks / triceTicks)).PadLeft(4,'0')}'";
+            string t = $"'{((int)(time.TimeOfDay.Ticks / triceTicks)).Dozenal().PadLeft(4,'0')}'";
             fx.LongTimePattern = t;
             fx.ShortTimePattern = t;
             var ld = ToLocalDate(time);
-            string y = Dozenal(ld.Year);
+            string y = ld.Year.Dozenal();
             string yy = y.Substring(y.Length - 3);
-            string m = Dozenal(ld.Month);
-            string mm = Dozenal(ld.Month).PadLeft(2, '0');
-            string d = Dozenal(ld.Day);
-            string dd = Dozenal(ld.Day).PadLeft(2, '0');
+            string m = ld.Month.Dozenal();
+            string mm = ld.Month.Dozenal().PadLeft(2, '0');
+            string d = ld.Day.Dozenal();
+            string dd = ld.Day.Dozenal().PadLeft(2, '0');
             fx.LongDatePattern = FixDigits(fx.LongDatePattern, yy, y, mm, m, dd, d);
             fx.ShortDatePattern = FixDigits(fx.ShortDatePattern, yy, y, mm, m, dd, d);
             fx.Format = FixDigits(format, yy, y, mm, m, dd, d);
             return fx;
-
-            string Dozenal (int n) {
-                return n.ToBase(12).Replace("A", "↊").Replace("B", "↋");
-            }
         }
     }
 }

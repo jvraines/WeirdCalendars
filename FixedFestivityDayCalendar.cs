@@ -11,7 +11,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
-            ("I", "\"ISO\" format")
+            ("c", "Compact format")
         };
 
         private bool IsMonth30(int year, int month) => (month & 1) == 0 || month == 3 && !IsLeapYear(year);
@@ -73,14 +73,14 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            if (format.FoundUnescaped("I")) {
+            if (format.FoundUnescaped("c")) {
                 int ad = AdjustedDay(time);
                 int w = (ad - 1) / 7 + 1;
                 var ld = ToLocalDate(time);
                 int d;
                 if (IsIntercalaryDay(ld.Year, ld.Month, ld.Day)) d = 0;
                 else d = (ad - 1) % 7 + 1;
-                fx.Format = format.ReplaceUnescaped("I", $"{ld.Month:00}-{w}-{d}");
+                fx.Format = format.ReplaceUnescaped("c", $"{ld.Month:00}-{w}-{d}");
             }
             return fx;
         }

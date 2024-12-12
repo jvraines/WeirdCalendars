@@ -14,7 +14,7 @@ namespace WeirdCalendars {
         public DoubleMonthCalendar() => Title = "Double-Month Calendar";
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
-            ("I", "\"ISO\" format")
+            ("c", "Compact format")
         };
 
         public override int GetMonthsInYear(int year, int era) {
@@ -43,11 +43,11 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            if (format.FoundUnescaped("I")) {
+            if (format.FoundUnescaped("c")) {
                 int day = ToLocalDate(time).Day;
                 int w = (day - 1) / 7 + 1;
                 int d = (day - 1) % 7 + 1;
-                fx.Format = format.ReplaceUnescaped("I", $"yyyy-M-{w}-{d}");
+                fx.Format = format.ReplaceUnescaped("c", $"yyyy-M-{w}-{d}");
             }
             return fx;
         }

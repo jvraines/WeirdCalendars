@@ -13,7 +13,7 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2020, 7, 21);
         protected override int SyncOffset => -1065;
 
-        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("I", "\"ISO\" format") };
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("c", "Compact format") };
 
         private int SolarCycle(int year) {
             return (year + 3) % 4 + 1;
@@ -104,7 +104,7 @@ namespace WeirdCalendars {
             int t = Tetraeteris(ymd.Year);
             fx.LongDatePattern = $"'{ymd.Day.ToOrdinal()} day of the {fx.MonthFullName} of the {t.ToOrdinal()} Tetraeteris'";
             fx.ShortDatePattern = $"d'-{fx.MonthShortName}-{t:D3}'";
-            fx.Format = fx.Format.ReplaceUnescaped("I", $"'{t:D3}-{sc}/{ymd.Month:D2}-{ymd.Day:D2}'");
+            fx.Format = fx.Format.ReplaceUnescaped("c", $"'{t:D3}-{sc}/{ymd.Month:D2}-{ymd.Day:D2}'");
             return fx;
         }
     }

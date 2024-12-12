@@ -13,6 +13,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2025, 1, 29);
         protected override int SyncOffset => 0;
 
+        public override DateTime MaxSupportedDateTime => VSOPLimit;
+
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 
         private Dictionary<int, PerennialChristianPlot> Plots = new Dictionary<int, PerennialChristianPlot>();

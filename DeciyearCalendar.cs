@@ -6,7 +6,7 @@ namespace WeirdCalendars {
     public class DeciyearCalendar : WeirdCalendar {
         
         public override string Author => "Anonymous";
-        public override Uri Reference => new Uri("https://deciyear.com/");
+        public override Uri Reference => new Uri("https://web.archive.org/web/20240326203508/http://www.deciyear.com/");
 
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
@@ -26,7 +26,7 @@ namespace WeirdCalendars {
         public override int DaysInWeek => 9;
         protected override int FirstMonth => 0;
 
-        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("I", "\"ISO\" format") };
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("c", "Compact format") };
 
         private int WeekdayNumber(DateTime time) {
             return GetDayOfMonth(time) % 9;
@@ -77,7 +77,7 @@ namespace WeirdCalendars {
             string t = GetTime(time).ToString(".000");
             fx.LongTimePattern = t;
             fx.ShortTimePattern = t;
-            fx.Format = fx.Format.ReplaceUnescaped("I", $"{ld.Year}.{(ld.Month == 10 ? "A" : ld.Month.ToString())}:{ld.Day}{t}");
+            fx.Format = fx.Format.ReplaceUnescaped("c", $"{ld.Year}.{(ld.Month == 10 ? "A" : ld.Month.ToString())}:{ld.Day}{t}");
             return fx;
         }
     }

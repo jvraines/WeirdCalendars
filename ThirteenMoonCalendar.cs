@@ -141,7 +141,7 @@ namespace WeirdCalendars {
             FormatWC fx =  base.GetFormatWC(dtfi, time, format);
             string gs = GetGalacticSignature(time);
             int kn = GetKin(time);
-            fx.LongDatePattern += $" '{gs} {kn}-Kin{(IsClearSign(time) ? "★" : "")}{(IsGalacticActivationPortal(time) ? " ⦒⦑" : "")}'";
+            fx.LongDatePattern += $" '{gs} {kn}-Kin{(IsClearSign(time) ? "★" : "")}{(IsGalacticActivationPortal(time) ? " Ｘ" : "")}'";
             fx.Format = format.ReplaceUnescaped("n", $"'{gs}'").ReplaceUnescaped("k", $"{kn}");
             return fx;
         }

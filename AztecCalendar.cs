@@ -7,7 +7,7 @@ namespace WeirdCalendars {
     public class AztecCalendar : WeirdCalendar {
         
         public override string Author => "Traditional and Ruben Ochoa";
-        public override Uri Reference => new Uri("http://www.calmecacanahuac.com/tlaahcicacaquiliztli/Ruben_Ochoa_Count");
+        public override Uri Reference => new Uri("https://web.archive.org/web/20230622203231/http://www.calmecacanahuac.com/tlaahcicacaquiliztli/Ruben_Ochoa_Count");
 
         protected override DateTime SyncDate => new DateTime(2022, 3, 21); // Day Count 10-16, Trecena 6 according to source
         protected override int SyncOffset => 0;

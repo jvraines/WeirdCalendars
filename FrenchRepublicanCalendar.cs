@@ -33,8 +33,7 @@ namespace WeirdCalendars {
         public override DateTime MinSupportedDateTime => new DateTime(1792, 9, 22);
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> {
-            ("n", "Rural day name"),
-            ("x", "Year in Roman numerals")
+            ("n", "Rural day name")
         };
 
         public enum DayOfWeekWC {
@@ -157,11 +156,12 @@ namespace WeirdCalendars {
             else {
                 fx.DayFullName = Enum.GetName(typeof(DayOfWeekWC), GetDayOfWeekWC(time));
             }
-            fx.Format = format.ReplaceUnescaped("n", $"\"{GetRuralDayName(ymd.Year, ymd.Month, ymd.Day)}\"");
+            fx.Format = format.ReplaceUnescaped("n", $"'{GetRuralDayName(ymd.Year, ymd.Month, ymd.Day)}'");
             fx.DayShortName = fx.DayFullName.Substring(0, 3);
             string roman = $"'{ymd.Year.ToRoman()}'";
-            fx.LongDatePattern = dtfi.LongDatePattern.ReplaceUnescaped("yyyy", roman);
-            fx.Format = fx.Format.ReplaceUnescaped("x", roman);
+            fx.LongDatePattern = FixDigits(dtfi.LongDatePattern, roman, roman);
+            fx.ShortDatePattern = FixDigits(dtfi.ShortDatePattern, roman, roman);
+            fx.Format = FixDigits(fx.Format, roman, roman);
             return fx;
         }
     }

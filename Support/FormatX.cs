@@ -12,6 +12,7 @@ namespace WeirdCalendars {
         internal string MonthShortName { get; set; }
         internal string DayFullName { get; set; }
         internal string DayShortName { get; set; }
+        internal string DateAndTimeSeparator { get; set; }
 
         internal FormatWC(string format, DateTimeFormatInfo dtfi) {
             Format = format;
@@ -19,7 +20,15 @@ namespace WeirdCalendars {
             ShortDatePattern = dtfi.ShortDatePattern;
             LongTimePattern = dtfi.LongTimePattern;
             ShortTimePattern = dtfi.ShortTimePattern;
+            DateAndTimeSeparator = " ";
+            WeirdCalendar c = (WeirdCalendar)dtfi.Calendar;
+            if (c.DaysInWeek == 0) {
+                LongDatePattern = ZapWeekDays(LongDatePattern);
+                ShortDatePattern = ZapWeekDays(ShortDatePattern);
+                Format = ZapWeekDays(Format);
+            }
+
+            string ZapWeekDays(string s) => s.ReplaceUnescaped("dddd, ", "").ReplaceUnescaped("ddd, ", "").ReplaceUnescaped("dddd", "").ReplaceUnescaped("ddd", "");
         }
     }
-
 }

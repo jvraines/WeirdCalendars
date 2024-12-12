@@ -13,7 +13,7 @@ namespace WeirdCalendars {
 
         public override int DaysInWeek => 5;
 
-        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("I", "\"ISO\" format") };
+        public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> { ("c", "Compact format") };
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
@@ -81,11 +81,11 @@ namespace WeirdCalendars {
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
-            if (format.FoundUnescaped("I")) {
+            if (format.FoundUnescaped("c")) {
                 var ld = ToLocalDate(time);
                 int bm = (ld.Month + 1) / 2;
                 int dy = ld.Day + ((ld.Month & 1) == 0 ? 30 : 0);
-                fx.Format = format.ReplaceUnescaped("I", $"yyyy-{bm}-{dy:D2}");
+                fx.Format = format.ReplaceUnescaped("c", $"yyyy-{bm}-{dy:D2}");
             }
             return fx;
         }

@@ -12,7 +12,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
-            ("I", "\"ISO\" format")
+            ("c", "Compact format")
         };
 
         public override int GetMonthsInYear(int year, int era) {
@@ -67,7 +67,7 @@ namespace WeirdCalendars {
                 fx.MonthShortName = fx.MonthFullName.Substring(0, 3);
             }
             string iso = $"{(m % 4 == 0 ? $"0-0" : $"{m / 4 + 1}-{m % 4}")}-{(d - 1) / 7 + 1}-{d}";
-            fx.Format = format.ReplaceUnescaped("I", iso);
+            fx.Format = format.ReplaceUnescaped("c", iso);
             return fx;
         }
     }

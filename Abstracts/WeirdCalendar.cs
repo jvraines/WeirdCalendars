@@ -44,9 +44,9 @@ namespace WeirdCalendars {
         */
 
         public virtual string Notes { get; protected set; }
-        
+
         private string title;
-        public string Title { 
+        public string Title {
             get => title ?? GetType().Name.ExpandPascalCase();
             protected set => title = value;
         }
@@ -56,19 +56,19 @@ namespace WeirdCalendars {
         public virtual string SpecialDay(int year, int month, int day) => NoSpecialDay;
         public virtual string SpecialDay(DateTime time) => NoSpecialDay;
 
-        protected InvalidOperationException BadWeekday = new InvalidOperationException ("Date cannot be represented as DayOfWeek. Use GetDayOfWeekWC() or ToStringWC() instead.");
+        protected InvalidOperationException BadWeekday = new InvalidOperationException("Date cannot be represented as DayOfWeek. Use GetDayOfWeekWC() or ToStringWC() instead.");
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.SolarCalendar;
 
         // Gregorian date of first day of a year in this calendar.
         // Choose a year around 2020 to speed calculations.
         protected abstract DateTime SyncDate { get; }
-        
+
         // Offset of year count from year of SyncDate
         protected abstract int SyncOffset { get; }
 
         protected DateTime VSOPLimit = new DateTime(6000, 1, 1);
-        
+
         /// <summary>
         /// A List of tuples describing custom format strings available for use with DateTime.ToStringWC.
         /// </summary>
@@ -139,7 +139,7 @@ namespace WeirdCalendars {
         }
 
         public override int GetMonth(DateTime time) {
-            ValidateDateTime(time); 
+            ValidateDateTime(time);
             return ToLocalDate(time).Month;
         }
 
@@ -147,9 +147,9 @@ namespace WeirdCalendars {
             ValidateDateParams(year, era);
             return 12;
         }
-        
+
         public override int GetYear(DateTime time) {
-            ValidateDateTime(time); 
+            ValidateDateTime(time);
             return ToLocalDate(time).Year;
         }
 
@@ -174,7 +174,7 @@ namespace WeirdCalendars {
         /// Scaling from normal Earth time.
         /// </summary>
         protected virtual double TimescaleFactor => 1;
-        
+
         protected virtual long HourTicks => TimeSpan.TicksPerDay / 24;
         protected virtual long MinuteTicks => TimeSpan.TicksPerDay / 1440;
         protected virtual long SecondTicks => TimeSpan.TicksPerDay / 86400;
@@ -228,7 +228,7 @@ namespace WeirdCalendars {
             return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
         }
 
-        protected bool IsISOLeapYear (int year) {
+        protected bool IsISOLeapYear(int year) {
             return new DateTime(year, 1, 1).DayOfWeek == DayOfWeek.Thursday || new DateTime(year, 12, 31).DayOfWeek == DayOfWeek.Thursday;
         }
 
@@ -260,7 +260,7 @@ namespace WeirdCalendars {
         }
 
         public override DateTime AddMonths(DateTime time, int months) {
-            ValidateDateTime(time); 
+            ValidateDateTime(time);
             var ld = ToLocalDate(time);
             int lastMonth = GetLastMonthOfYear(ld.Year);
             for (int i = 0, j = Math.Sign(months); i < Math.Abs(months); i++) {
@@ -280,7 +280,7 @@ namespace WeirdCalendars {
         }
 
         public override DateTime AddYears(DateTime time, int years) {
-            ValidateDateTime(time); 
+            ValidateDateTime(time);
             var ld = ToLocalDate(time);
             ld.Year += years;
             int lastMonth = GetLastMonthOfYear(ld.Year);
@@ -417,12 +417,13 @@ namespace WeirdCalendars {
             ValidationEnabled = true;
             return LastLocalDate;
         }
-        
-        internal virtual FormatWC GetFormatWC (DateTimeFormatInfo dtfi, DateTime time, string format) {
+
+        internal virtual FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             return new FormatWC(format, dtfi);
         }
 
         internal string Language;
+
         internal virtual void CustomizeDTFI(DateTimeFormatInfo dtfi) {
             //Any tweaks needed by specific calendars
         }
@@ -492,6 +493,13 @@ namespace WeirdCalendars {
                 return f.ReplaceUnescaped("yyyyy", y.ToString("D5")).ReplaceUnescaped(
                 "yyyy", y.ToString("D4")).ReplaceUnescaped("yyy", y.ToString("D3")).ReplaceUnescaped("yy", (y % 100).ToString("D2"));
             }
+        }
+
+        internal string FixNegativeYears(string year) {
+            if (year.Contains("-")) {
+                year = $"-{year.Replace("-", "")}";
+            }
+            return year;
         }
 
         internal string FixDigits(string s, object y4 = null, object y2 = null, object m2 = null, object m1 = null, object d2 = null, object d1 = null) {

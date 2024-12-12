@@ -41,3 +41,17 @@ Example:
     // Or get its value using a custom method.
     string holy = discordian.GetHolyDay(new DateTime(2024, 3, 19));
     // Returns "Mojoday".
+
+The following general design principles have been followed in adapting these calendars:
+
+Years are numbered according the given epoch. If none, then Common Era (CE) numbering is assumed; years which begin in the first half of the CE year assume the number of that year, while years which begin in the second half of the CE year assume the number of the next year. In some cases, this method may be overruled by inspection of examples provided by the author.
+
+Where leap days are employed but no method of determining the leap year is given, then the Gregorian method is assumed, based on the calendar year number. In some cases, inspection of the author's examples shows that the Gregorian year number is used instead.
+
+Negative years are generally allowed unless the author is emphatic about the epoch or the rules of the calendar do not facilitate calculation of negative years.
+
+Calendars which do not specify months but have some immediate subdivision of the year, such as seasons, will present those subdivisions as "months" in the context of the Globalization API. Where there are no subdivisions or months are specifically ruled out, the year contains a single "month" equal in duration to the year.
+
+Where there is no mention of a system of weeks, the current Gregorian weekday is assumed. In a few cases, an intermediate subdivision between month and day has been adapted as a "week." Otherwise, where the week is longer than seven days, the enumeration **DayOfWeekWC** is provided. Where weekdays are specifically ruled out, **DaysInWeek** returns 0, weekday format specifiers are ignored, and calls to **GetDayOfWeek** will throw an exception.
+
+Idiosyncratic date formats are supported as a method and/or custom format specifier, unless the author is emphatic about a canonical format. In the latter case, all calls to **ToStringWC** will produce the canonical format regardless of format argument.

@@ -30,7 +30,7 @@ namespace WeirdCalendars {
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
             ("n", "Festival"),
-            ("b", "Symbolized")
+            ("c", "Compact format")
         };
 
         protected override int GetFirstDayOfMonth(int year, int month) {
@@ -164,7 +164,7 @@ namespace WeirdCalendars {
                 fx.DayShortName = d.Substring(0, 3);
             }
             if (format.FoundUnescaped("n")) fx.Format = format.ReplaceUnescaped("n", $"'{GetFestival(time)}'");
-            if (format.FoundUnescaped("b")) fx.Format = fx.Format.ReplaceUnescaped("b", $"'{GetSymbolized(time)}'");
+            if (format.FoundUnescaped("c")) fx.Format = fx.Format.ReplaceUnescaped("c", $"'{GetSymbolized(time)}'");
             return fx;
         }
 

@@ -15,6 +15,8 @@ namespace WeirdCalendars {
         // Maximum valid date for season calculation from VSOP87.
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
+        public override int DaysInWeek => 0;
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
             return GetPlot(year).Quarters[month - 1];
@@ -58,8 +60,8 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
             double tyme = time.TimeOfDay.TotalHours / 24;
-            //if (format == "g") fx.ShortTimePattern = $"'\b{tyme:.00}'"; backspace bugs XML output
-            if (format == "g") fx.ShortTimePattern = $"{tyme:.00}";
+            fx.ShortTimePattern = $"{tyme:.00}";
+            fx.DateAndTimeSeparator = "";
             return fx;
         }
     }

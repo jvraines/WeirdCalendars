@@ -10,7 +10,7 @@ namespace WeirdCalendars {
         public override string Author => "Traditional";
         public override Uri Reference => new Uri("https://webspace.science.uu.nl/~gent0113/babylon/babycal.htm");
 
-        public override string Notes => "Timekeeping scheme from https://www.babylonianhours.com/.";
+        public override string Notes => "Timekeeping scheme from https://web.archive.org/web/20240927040019/https://www.babylonianhours.com/.";
 
         protected override DateTime SyncDate => new DateTime(2024, 4, 10);
         protected override int SyncOffset => 748;
@@ -18,7 +18,7 @@ namespace WeirdCalendars {
         // Maximum valid date for season calculation from VSOP87.
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
-        public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunarCalendar;
+        public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
         
         private static Dictionary<int, BabylonianPlot> Plots = new Dictionary<int, BabylonianPlot>();
 
