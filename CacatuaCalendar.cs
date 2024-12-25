@@ -6,7 +6,7 @@ namespace WeirdCalendars {
         public override string Author => "Denis Bredelet";
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/Cacatua_Calendar");
 
-        protected override DateTime SyncDate => new DateTime(2024, 12, 27);
+        protected override DateTime SyncDate => new DateTime(2026, 1, 2);
         protected override int SyncOffset => 0;
 
         private enum LeapType {
