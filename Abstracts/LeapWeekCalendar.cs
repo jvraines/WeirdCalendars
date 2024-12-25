@@ -5,6 +5,7 @@ namespace WeirdCalendars {
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
             //Default to Monday start
+            ValidateDateTime(time);
             return (DayOfWeek)(GetDayOfYear(time) % 7);
         }
 

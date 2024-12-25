@@ -7,7 +7,7 @@ namespace WeirdCalendars {
         public override Uri Reference => new Uri("https://calendars.fandom.com/wiki/Cacatua_Calendar");
 
         protected override DateTime SyncDate => new DateTime(2024, 12, 27);
-        protected override int SyncOffset => 0;
+        protected override int SyncOffset => 1;
 
         private enum LeapType {
             None,
@@ -54,6 +54,16 @@ namespace WeirdCalendars {
                     LeapType l = GetLeapType(year);
                     return l == LeapType.None || l == LeapType.Short ? 30 : 31;
             }
+        }
+
+        public override bool IsLeapYear(int year, int era) {
+            ValidateDateParams(year, era);
+            return GetLeapType(year) != LeapType.None;
+        }
+
+        public override bool IsLeapDay(int year, int month, int day, int era) {
+            ValidateDateParams(year, month, day, era);
+            return !(day != 31 || month == 3 || month == 5 || month == 8 || month == 12);
         }
     }
 }

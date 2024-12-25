@@ -5,10 +5,10 @@ namespace WeirdCalendars {
     public class PaxCalendar : LeapWeekCalendar {
 
         public override string Author => "James A. Colligan";
-        public override Uri Reference => new Uri("https://myweb.ecu.edu/mccartyr/colligan.html");
+        public override Uri Reference => new Uri("https://web.archive.org/web/20240905204215/https://myweb.ecu.edu/mccartyr/colligan.html");
 
-        protected override DateTime SyncDate => new DateTime(2017, 1, 1);
-        protected override int SyncOffset => 0;
+        protected override DateTime SyncDate => new DateTime(2024, 12, 29);
+        protected override int SyncOffset => 1;
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
 
         public override DateTime AddYears(DateTime time, int years) {
@@ -26,20 +26,23 @@ namespace WeirdCalendars {
         }
 
         public override DayOfWeek GetDayOfWeek(DateTime time) {
+            ValidateDateTime(time);
             return (DayOfWeek)((GetDayOfMonth(time) - 1) % 7);
         }
 
         public override int GetDaysInMonth(int year, int month, int era) {
+            ValidateDateParams(year, month, era);
             return IsLeapMonth(year, month) ? 7 : 28;
         }
 
         public override int GetMonthsInYear(int year, int era) {
+            ValidateDateParams(year, era);
             return IsLeapYear(year) ? 14 : 13;
         }
 
         public override int GetLeapMonth(int year, int era) {
             ValidateDateParams(year, era);
-            return IsLeapYear(year) ? 14 : 0;
+            return IsLeapYear(year) ? 13 : 0;
         }
 
         public override bool IsLeapDay(int year, int month, int day, int era) {
@@ -49,12 +52,12 @@ namespace WeirdCalendars {
 
         public override bool IsLeapMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
-            return month == 14;
+            return IsLeapYear(year) && month == 13;
         }
 
         public override bool IsLeapYear(int year, int era) {
             ValidateDateParams(year, era);
-            return year % 100 % 6 == 0 || year % 100 == 99 || (year % 100 == 0 && year % 400 != 0) ;
+            return year % 100 % 6 == 0 && year % 400 != 0 || year % 100 == 99;
         }
 
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {

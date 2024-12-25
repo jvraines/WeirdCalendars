@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Comments for import.txt" />
     <None Remove="Languages.txt" />
   </ItemGroup>
 

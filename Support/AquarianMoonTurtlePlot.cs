@@ -1,7 +1,8 @@
 ﻿using AA.Net;
+using System;
 
 namespace WeirdCalendars.Support {
-    internal class LunarPlot {
+    internal class AquarianMoonTurtlePlot {
         internal int YearDays { get; }
         private int blueMoon = 0;
         internal int BlueMoon {
@@ -22,24 +23,24 @@ namespace WeirdCalendars.Support {
         }
 
         private int Year;
-        private Earth.Season FirstSeason { get; set; }
 
-        internal LunarPlot(int year, Earth.Season start) {
+        internal AquarianMoonTurtlePlot(int year) {
             Year = year;
-            FirstSeason = start;
             FindYearBounds();
             YearDays = (int)(yearStart[1] - yearStart[0]);
         }
 
         protected double[] yearStart = new double[2];
 
+        private const double MercurialOffset = 0.5 + 11.035 / 360;
+        private double DayOf(double jde) => Math.Round(jde.JulianUniversalDay() + MercurialOffset) - MercurialOffset;
+
         private void FindYearBounds() {
-            // Begins with the new moon preceding the first full moon after the first season
+            // Begins with the new moon preceding the March equinox
             for (int i = 0; i < 2; i++) {
-                double equinox = Earth.SeasonStart(Year + i, FirstSeason);
-                double fullMoon = Moon.NextPhase(Moon.Phase.FullMoon, equinox);
-                double newMoon = Moon.NextPhase(Moon.Phase.NewMoon, fullMoon - 20);
-                yearStart[i] = newMoon.ToLastUTMidnight();
+                double equinox = Earth.SeasonStart(Year + i, Earth.Season.March);
+                double newMoon = Moon.NextPhase(Moon.Phase.NewMoon, equinox - 29);
+                yearStart[i] = DayOf(newMoon);
             }
         }
 
@@ -47,24 +48,18 @@ namespace WeirdCalendars.Support {
             moons = new int[13];
             int moonPtr = 0;
             double lastNewMoon = yearStart[0];
-            int moonCounter = 1;
-            int nextSeason = (int)FirstSeason;
+            int nextSeason = 0;
             double seasonEnds;
             int year = Year;
             GetNextSeason();
             // Find subsequent new moons and moon start days through end of year
             do {
-                double nextNewMoon = Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28).ToLastUTMidnight();
-                double nextFullMoon = Moon.NextPhase(Moon.Phase.FullMoon, nextNewMoon);
+                double nextNewMoon = DayOf(Moon.NextPhase(Moon.Phase.NewMoon, lastNewMoon + 28));
                 if (BlueMoon == 0) {
-                    if (nextFullMoon < seasonEnds) moonCounter++;
-                    else {
-                        if (moonCounter > 3) BlueMoon = moonPtr - 1;
-                        else {
-                            moonCounter = 1;
-                            GetNextSeason();
-                        }
+                    if (nextNewMoon < seasonEnds) {
+                        if (moonPtr > 0 && moonPtr % 3 == 0) BlueMoon = moonPtr == 12 ? 13 : moonPtr;
                     }
+                    else GetNextSeason();
                 }
                 moons[moonPtr++] = (int)(nextNewMoon - lastNewMoon);
                 lastNewMoon = nextNewMoon;
