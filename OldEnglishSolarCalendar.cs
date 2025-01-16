@@ -29,6 +29,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 12, 22);
         protected override int SyncOffset => -439;
 
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
+
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {

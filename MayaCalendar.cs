@@ -14,6 +14,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 3116;
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.Unknown;
+        public override CalendarRealization Realization => CalendarRealization.Archaic;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> {
             ("c", "Calendar round"),

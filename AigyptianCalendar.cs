@@ -11,6 +11,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2020, 10, 13);
         protected override int SyncOffset => 356;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         // Uses strictly a day count, so year = month
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);

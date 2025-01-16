@@ -52,13 +52,21 @@ namespace WeirdCalendars {
         }
 
         protected readonly string NoSpecialDay = "(none)";
-
-        public virtual string SpecialDay(int year, int month, int day) => NoSpecialDay;
         public virtual string SpecialDay(DateTime time) => NoSpecialDay;
 
         protected InvalidOperationException BadWeekday = new InvalidOperationException("Date cannot be represented as DayOfWeek. Use GetDayOfWeekWC() or ToStringWC() instead.");
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.SolarCalendar;
+
+        public enum CalendarRealization {
+            Archaic,
+            Current,
+            Proposed,
+            Conjectural,
+            Fictional
+        }
+
+        public virtual CalendarRealization Realization => CalendarRealization.Proposed;
 
         // Gregorian date of first day of a year in this calendar.
         // Choose a year around 2020 to speed calculations.

@@ -11,6 +11,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2023, 3, 24);
         protected override int SyncOffset => 24 ;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override string Notes => "According to the Discworld MUD.";
         protected override double TimescaleFactor => 0.3;
 
@@ -18,7 +20,7 @@ namespace WeirdCalendars {
             ("n", "Special day")
         };
 
-        public override string SpecialDay(int year, int month, int day) => GetSpecialDay(month, day);
+        public override string SpecialDay(DateTime time) => GetSpecialDay(time);
 
         public override int DaysInWeek => 8;
 
@@ -60,8 +62,9 @@ namespace WeirdCalendars {
             return 800;
         }
 
-        public string GetSpecialDay(int month, int day) {
+        public string GetSpecialDay(DateTime time) {
             string result = NoSpecialDay;
+            var (_, month, day, _) = ToLocalDate(time);
             if (day == 1) {
                 if (month == 1) result = "Hogswatchday";
                 else if (month == 14) result = "Crueltide";
@@ -91,7 +94,7 @@ namespace WeirdCalendars {
                 fx.DayFullName = "Octeday";
                 fx.DayShortName = "Oct";
             }
-            fx.Format = fx.Format.ReplaceUnescaped("n", $"'{GetSpecialDay(ymd.Month, ymd.Day)}'");
+            fx.Format = fx.Format.ReplaceUnescaped("n", $"\"{GetSpecialDay(time)}\"");
             return fx;
         }
     }

@@ -13,6 +13,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 1;
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunarCalendar;
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
 
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 

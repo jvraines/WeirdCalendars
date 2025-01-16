@@ -10,6 +10,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2025, 1, 26); // Accumulated Julian error of +33 days from author's New Year date
         protected override int SyncOffset => 2400;  // Revised Stonehenge 3ii radiocarbon date estimate
 
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
+
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
             ("i", "Stone data")
         };

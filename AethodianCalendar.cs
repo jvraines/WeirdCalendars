@@ -15,6 +15,7 @@ namespace WeirdCalendars {
         // expressly provides: "The calendar starts from 2010-04-22T12:00:00-04:00, the date Theodia was founded."
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.Unknown;
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
 
         public override int DaysInWeek => 6;
 

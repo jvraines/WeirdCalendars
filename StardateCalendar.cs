@@ -10,6 +10,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2323, 1, 1);
         protected override int SyncOffset => -2323;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override string Notes => "ST:TNG timeline according to Michael and Denise Okuda.";
 
         public StardateCalendar() => Title = "Stardate";

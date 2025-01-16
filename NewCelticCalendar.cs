@@ -13,6 +13,7 @@ namespace WeirdCalendars {
         public override DateTime MinSupportedDateTime => new DateTime(33, 11, 9); //first CE grand cycle
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
 
         public override int GetMonthsInYear(int year, int era) {
             ValidateDateParams(year, era);

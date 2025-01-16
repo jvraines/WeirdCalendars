@@ -12,6 +12,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 2);
         protected override int SyncOffset => -524;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override string Notes => "Dale Reckoning at latitude of Waterdeep";
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {

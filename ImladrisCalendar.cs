@@ -24,6 +24,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => IsAnaleptic ? SyncAnalepetic.date : SyncGregorian.date;
         protected override int SyncOffset => IsAnaleptic ? SyncAnalepetic.offset : SyncGregorian.offset;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         // Following the chronology of James the Just at 
         // https://tolkienforums.activeboard.com/t42820320/middle-earth-chronology
         private (DateTime date, int offset) SyncAnalepetic = (new DateTime(2020, 3, 28), 11057);

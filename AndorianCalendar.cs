@@ -12,6 +12,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2381, 9, 3);
         protected override int SyncOffset => -1672;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
             ("n", "Fesoan orbit")
         };

@@ -10,6 +10,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         //As there is no provision for leap years, adding intercalary "Boonta Eve" between Fifth and Sixth.
 
         public new enum DayOfWeekWC {

@@ -13,6 +13,7 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 0;
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         private static Dictionary<int, AquarianMoonTurtlePlot> Plots = new Dictionary<int, AquarianMoonTurtlePlot>();

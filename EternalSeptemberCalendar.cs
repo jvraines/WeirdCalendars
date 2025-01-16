@@ -9,6 +9,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 1, 1);
         protected override int SyncOffset => 0;
 
+        public override CalendarRealization Realization => CalendarRealization.Current;
+
         private DateTime baseDate = new DateTime(1993, 9, 1);
 
         protected override void ValidateDateParams(params int[] param) {

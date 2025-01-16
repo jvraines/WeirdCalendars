@@ -11,7 +11,9 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2022, 3, 21); // Day Count 10-16, Trecena 6 according to source
         protected override int SyncOffset => 0;
- 
+
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
+
         // Maximum valid date for season calculation from AA.
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 

@@ -6,6 +6,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => IsAnaleptic ? SyncAnalepetic.date : SyncGregorian.date;
         protected override int SyncOffset => IsAnaleptic ? SyncAnalepetic.offset : SyncGregorian.offset;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         private bool isAnaleptic;
         public bool IsAnaleptic {
             get => isAnaleptic;

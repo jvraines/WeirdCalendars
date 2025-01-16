@@ -9,6 +9,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 4, 23, 17, 24, 0);
         protected override int SyncOffset => -1373;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override int DaysInWeek => 8;
         public new enum DayOfWeekWC {
             Blank = -1,

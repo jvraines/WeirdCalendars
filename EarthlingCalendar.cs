@@ -12,6 +12,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2025, 1, 1, 11, 0, 0);
         protected override int SyncOffset => -535;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override int DaysInWeek => 6;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {

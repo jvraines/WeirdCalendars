@@ -9,6 +9,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2024, 7, 16);
         protected override int SyncOffset => -1945;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
             switch (month) {

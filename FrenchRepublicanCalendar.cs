@@ -29,6 +29,9 @@ namespace WeirdCalendars {
 
         protected override DateTime SyncDate => new DateTime(2020, 9, 22);
         protected override int SyncOffset => -1791;
+
+        public override CalendarRealization Realization => CalendarRealization.Archaic;
+
         public override DateTime MaxSupportedDateTime => IsRevised ? DateTime.MaxValue : VSOPLimit; //bound for equinox accuracy
         public override DateTime MinSupportedDateTime => new DateTime(1792, 9, 22);
 

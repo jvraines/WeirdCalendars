@@ -10,6 +10,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(1985, 6, 14, 19, 11, 17);
         protected override int SyncOffset => -1406;
 
+        public override CalendarRealization Realization => CalendarRealization.Fictional;
+
         protected override double TimescaleFactor => 1.0 / 28; // per https://greyhawkonline.com/greyhawkwiki/Common_Year#Conversion_to_timelines_of_other_worlds, reckoning Midsummer 579 = Midsummer 1985
 
         public override int GetMonthsInYear(int year, int era) {

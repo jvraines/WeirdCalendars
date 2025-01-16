@@ -240,6 +240,10 @@ namespace WeirdCalendars {
             return (int)((isDynamical ? jd.JulianUniversalDay() : jd) + 0.5) - 0.5;
         }
 
+        public static double ToClosestUTMidnight(this double jd, bool isDynamical = true) {
+            return (int)Math.Round((isDynamical ? jd.JulianUniversalDay() : jd) + 0.5) - 0.5;
+        }
+
         public static int FloorMod(this int a, int n) => a - n * (int)Math.Floor((double)a / n);
     }
 }

@@ -13,6 +13,8 @@ namespace WeirdCalendars {
         protected override DateTime SyncDate => new DateTime(2022, 4, 18);
         protected override int SyncOffset => 2780;
 
+        public override CalendarRealization Realization => CalendarRealization.Archaic;
+
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string, string)> {
             ("n", "Decan number"),
             ("nn", "Decan deity")

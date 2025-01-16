@@ -16,6 +16,7 @@ namespace WeirdCalendars {
         public override DateTime MaxSupportedDateTime => VSOPLimit;
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)>() {
             ("n", "Year name"),

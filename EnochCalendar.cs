@@ -15,7 +15,7 @@ namespace WeirdCalendars {
             ("n", "Holy day")
         };
 
-        public override string SpecialDay(int year, int month, int day) => GetHolyDay(year, month, day);
+        public override string SpecialDay(DateTime time) => GetHolyDay(time);
 
         public override int GetDaysInMonth(int year, int month, int era) {
             ValidateDateParams(year, month, era);
@@ -46,9 +46,9 @@ namespace WeirdCalendars {
             return (DayOfWeek)((GetDayOfYear(time) % 91 + 5) % 7);
         }
 
-        public string GetHolyDay(int year, int month, int day) {
-            ValidateDateParams(year, month, day, 1);
+        public string GetHolyDay(DateTime time) {
             string h = NoSpecialDay;
+            var (_, month, day, _) = ToLocalDate(time);
             switch (month) {
                 case 1:
                     if (day == 0) h = "Spring Equinox";
@@ -110,10 +110,7 @@ namespace WeirdCalendars {
         internal override FormatWC GetFormatWC(DateTimeFormatInfo dtfi, DateTime time, string format) {
             FormatWC fx = new FormatWC(format, dtfi);
             CustomizeTimes(fx, time);
-            if (format.FoundUnescaped("n")) {
-                var ld = ToLocalDate(time);
-                fx.Format = format.ReplaceUnescaped("n", $"'{GetHolyDay(ld.Year, ld.Month, ld.Day)}'");
-            }
+            if (format.FoundUnescaped("n")) fx.Format = format.ReplaceUnescaped("n", $"'{GetHolyDay(time)}'");
             return fx;
         }
     }

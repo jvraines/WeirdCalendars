@@ -20,6 +20,7 @@ namespace WeirdCalendars {
 
         public override DateTime MaxSupportedDateTime => VSOPLimit;
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+        public override CalendarRealization Realization => CalendarRealization.Conjectural;
 
         public enum DayOfWeekWC {
             A,

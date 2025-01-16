@@ -5,13 +5,14 @@ using System.Globalization;
 namespace WeirdCalendars {
     public class GregorianLunarCalendar : WeirdCalendar {
         
-        public override string Author => "David Madore";
+        public override string Author => "Traditional";
         public override Uri Reference => new Uri("http://www.madore.org/~david/misc/calendar.html#gregorian.lunar");
 
         protected override DateTime SyncDate => new DateTime(1999, 12, 8);
         protected override int SyncOffset => 1;
 
         public override CalendarAlgorithmType AlgorithmType => CalendarAlgorithmType.LunisolarCalendar;
+        public override CalendarRealization Realization => CalendarRealization.Current;
 
         public override List<(string FormatString, string Description)> CustomFormats => new List<(string FormatString, string Description)> {
             ("e", "Epact")

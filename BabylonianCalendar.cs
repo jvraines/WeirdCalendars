@@ -10,10 +10,12 @@ namespace WeirdCalendars {
         public override string Author => "Traditional";
         public override Uri Reference => new Uri("https://webspace.science.uu.nl/~gent0113/babylon/babycal.htm");
 
-        public override string Notes => "Timekeeping scheme from https://web.archive.org/web/20240927040019/https://www.babylonianhours.com/.";
+        public override string Notes => "Clock by <a href=\"https://web.archive.org/web/20240927040019/https://www.babylonianhours.com/\">Willis Monroe</a>.";
 
         protected override DateTime SyncDate => new DateTime(2024, 4, 10);
         protected override int SyncOffset => 748;
+
+        public override CalendarRealization Realization => CalendarRealization.Archaic;
 
         // Maximum valid date for season calculation from VSOP87.
         public override DateTime MaxSupportedDateTime => VSOPLimit;

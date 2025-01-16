@@ -9,6 +9,8 @@ namespace WeirdCalendars {
         protected override int SyncOffset => 1166;
         public override int DaysInWeek => 5;
 
+        public override CalendarRealization Realization => CalendarRealization.Current;
+
         public override string Author => "Malaclypse The Younger";
         public override Uri Reference => new Uri("https://www.principiadiscordia.com/book/41.php");
 
